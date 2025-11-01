@@ -189,10 +189,28 @@ fused_result = mogpr.fit_transform(fusets_data)
 ```
 
 **Temporal Compositing Strategy for GEE**:
-- **31 periods** of 12-day composites per year
-- **Period 1**: Jan 1-12, **Period 2**: Jan 13-25, etc.
+- **31 periods** of 12-day composites per agricultural year
+- **Default configuration**: November 1, 2024 - October 31, 2025
+- **Period 1**: Nov 1-12, 2024 (first planting season starts)
+- **Period 2**: Nov 13-24, 2024
+- **Period 6**: Dec 31, 2024 - Jan 11, 2025 (crosses year boundary)
+- **Period 31**: Oct 21-31, 2025 (full coverage complete)
 - Median composites with cloud masking for S2
 - Both individual period files and combined multi-band exports supported
+
+**Indonesian Agricultural Calendar Coverage**:
+- **Season 1 (Nov-Mar)**: First planting season - **handles year boundary**
+  - Periods 1-11 (Nov 2024 - Mar 2025)
+  - Critical: Crosses from 2024 → 2025
+  - Day of year handling: Nov-Dec (305-365), Jan-Mar (1-90)
+  
+- **Season 2 (Apr-Jun)**: Second planting season (dry season)
+  - Periods 12-18 (Apr - Jun 2025)
+  - Day of year: 90-180
+  
+- **Season 3 (Jul-Sep)**: Third planting season (optional intensive)
+  - Periods 19-25 (Jul - Sep 2025)
+  - Day of year: 180-270
 
 **Required data structure for multi-sensor processing**:
 - Dimensions: `(t, y, x)` (note: `t` not `time`)
