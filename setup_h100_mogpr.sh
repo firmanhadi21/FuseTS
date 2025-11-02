@@ -50,6 +50,16 @@ pip install numpy pandas scipy matplotlib
 pip install earthengine-api geemap
 pip install tqdm  # For progress bars
 
+# Install Jupyter and ipykernel for notebook support
+echo ""
+echo "📓 Installing Jupyter and ipykernel..."
+pip install jupyter jupyterlab ipykernel ipywidgets
+
+# Register kernel
+echo ""
+echo "🔧 Registering kernel with Jupyter..."
+python -m ipykernel install --user --name mogpr_h100 --display-name "Python (MOGPR H100)"
+
 # Verify installation
 echo ""
 echo "🔍 Verifying installation..."
