@@ -46,6 +46,7 @@ pip install gpytorch
 echo ""
 echo "📚 Installing FuseTS dependencies..."
 pip install xarray netcdf4 h5netcdf
+pip install rioxarray  # For raster I/O with xarray
 pip install numpy pandas scipy matplotlib
 pip install earthengine-api geemap
 pip install tqdm  # For progress bars
