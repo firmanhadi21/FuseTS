@@ -122,11 +122,11 @@ class MOGPRTransformer(BaseEstimator):
             data_vars=vars,
             coords=dict(
                 x=ds.x,
-            y=ds.y,
-            t=output_time,
-        ),
-    )
-    return out_ds
+                y=ds.y,
+                t=output_time,
+            ),
+        )
+        return out_ds
 
     def fit_transform(self, X: "Union[xarray.Dataset, DataCube]", y=None, **fit_params):
         if _openeo_exists:
@@ -136,8 +136,6 @@ class MOGPRTransformer(BaseEstimator):
                 return mogpr_openeo(X)
 
         return mogpr(X)
-
-
 def mogpr(
     array: xarray.Dataset,
     variables: List[str] = None,
