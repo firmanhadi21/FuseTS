@@ -91,9 +91,8 @@ def whittaker(
     if _openeo_exists:
         from openeo import DataCube
         if isinstance(array, DataCube):
-        from .openeo import whittaker as whittaker_openeo
-
-        return whittaker_openeo(array, smoothing_lambda)
+            from .openeo import whittaker as whittaker_openeo
+            return whittaker_openeo(array, smoothing_lambda)
 
     dates = _extract_dates(array)
     time_dimension = _time_dimension(array, time_dimension)
