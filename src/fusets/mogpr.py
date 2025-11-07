@@ -6,7 +6,7 @@ Link: https://doi.org/10.1016/j.rse.2019.111452
 import importlib
 import itertools
 from datetime import datetime
-from typing import List, Union
+from typing import List, Union, TYPE_CHECKING
 
 import numpy as np
 import pandas as pd
@@ -15,9 +15,10 @@ import xarray
 from fusets._xarray_utils import _extract_dates, _output_dates, _time_dimension
 from fusets.base import BaseEstimator
 
-_openeo_exists = importlib.util.find_spec("openeo") is not None
-if _openeo_exists:
+if TYPE_CHECKING:
     from openeo import DataCube
+
+_openeo_exists = importlib.util.find_spec("openeo") is not None
 
 
 class MOGPRTransformer(BaseEstimator):
@@ -121,21 +122,19 @@ class MOGPRTransformer(BaseEstimator):
             data_vars=vars,
             coords=dict(
                 x=ds.x,
-                y=ds.y,
-                t=output_time,
-            ),
-        )
-        return out_ds
+            y=ds.y,
+            t=output_time,
+        ),
+    )
+    return out_ds
 
-    def fit_transform(self, X: Union[xarray.Dataset, DataCube], y=None, **fit_params):
-        if _openeo_exists and isinstance(X, DataCube):
-            from .openeo import mogpr as mogpr_openeo
+def fit_transform(self, X: "Union[xarray.Dataset, DataCube]", y=None, **fit_params):
+    if _openeo_exists and isinstance(X, DataCube):
+        from .openeo import mogpr as mogpr_openeo
 
-            return mogpr_openeo(X)
+        return mogpr_openeo(X)
 
-        return mogpr(X)
-
-
+    return mogpr(X)
 def mogpr(
     array: xarray.Dataset,
     variables: List[str] = None,
