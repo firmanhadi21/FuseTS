@@ -2,7 +2,7 @@ import importlib.util
 import math
 from array import array
 from datetime import timedelta
-from typing import Union
+from typing import Union, TYPE_CHECKING
 
 import numpy as np
 import xarray
@@ -11,9 +11,10 @@ from xarray import DataArray
 from fusets._xarray_utils import _extract_dates, _output_dates, _time_dimension
 from fusets.base import BaseEstimator
 
-_openeo_exists = importlib.util.find_spec("openeo") is not None
-if _openeo_exists:
+if TYPE_CHECKING:
     from openeo import DataCube
+
+_openeo_exists = importlib.util.find_spec("openeo") is not None
 
 
 """
@@ -31,7 +32,7 @@ class WhittakerTransformer(BaseEstimator):
 
     """
 
-    def fit_transform(self, X: Union[DataArray, DataCube], y: Union[DataArray, DataCube] = None, **fit_params):
+    def fit_transform(self, X: "Union[DataArray, DataCube]", y: "Union[DataArray, DataCube]" = None, **fit_params):
         """
         Whittaker represents a computationally efficient reconstruction method for smoothing and gap-filling of time series.
         The main function takes as input two vectors of the same length: the y time series data (e.g. NDVI) and the
@@ -63,17 +64,18 @@ class WhittakerTransformer(BaseEstimator):
         """
 
         smoothing = fit_params.get("smoothing_lambda", 10000)
-        if _openeo_exists and isinstance(array, DataCube):
-            from .openeo import whittaker as whittaker_openeo
-
-            return whittaker_openeo(array, smoothing)
+        if _openeo_exists:
+            from openeo import DataCube
+            if isinstance(array, DataCube):
+                from .openeo import whittaker as whittaker_openeo
+                return whittaker_openeo(array, smoothing)
 
         return whittaker(X, smoothing, fit_params.get("time_dimension", "t"), fit_params.get("prediction_period", None))
 
 
 def whittaker(
-    array: Union[DataArray, DataCube], smoothing_lambda=10000, time_dimension="t", prediction_period=None
-) -> Union[DataArray, DataCube]:
+    array: "Union[DataArray, DataCube]", smoothing_lambda=10000, time_dimension="t", prediction_period=None
+) -> "Union[DataArray, DataCube]":
     """
     Convenience method for whittaker. See :meth:`fusets.whittaker.WhittakerTransformer.fit_transform` for more detailed documentation.
 
@@ -86,7 +88,9 @@ def whittaker(
     Returns: A smoothed datacube
 
     """
-    if _openeo_exists and isinstance(array, DataCube):
+    if _openeo_exists:
+        from openeo import DataCube
+        if isinstance(array, DataCube):
         from .openeo import whittaker as whittaker_openeo
 
         return whittaker_openeo(array, smoothing_lambda)
