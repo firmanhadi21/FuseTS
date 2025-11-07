@@ -128,13 +128,16 @@ class MOGPRTransformer(BaseEstimator):
     )
     return out_ds
 
-def fit_transform(self, X: "Union[xarray.Dataset, DataCube]", y=None, **fit_params):
-    if _openeo_exists and isinstance(X, DataCube):
-        from .openeo import mogpr as mogpr_openeo
+    def fit_transform(self, X: "Union[xarray.Dataset, DataCube]", y=None, **fit_params):
+        if _openeo_exists:
+            from openeo import DataCube
+            if isinstance(X, DataCube):
+                from .openeo import mogpr as mogpr_openeo
+                return mogpr_openeo(X)
 
-        return mogpr_openeo(X)
+        return mogpr(X)
 
-    return mogpr(X)
+
 def mogpr(
     array: xarray.Dataset,
     variables: List[str] = None,
