@@ -1,16 +1,13 @@
 import importlib.util
-from typing import Union, Any
+from typing import Union, TYPE_CHECKING
 
 from xarray import DataArray, Dataset
 
-_openeo_exists = importlib.util.find_spec("openeo") is not None
-if _openeo_exists:
+if TYPE_CHECKING:
     from openeo import DataCube
-else:
-    DataCube = Any  # Fallback when openeo not installed
 
 
-def phenology(array: Union[DataArray, DataCube]) -> Dataset:
+def phenology(array: "Union[DataArray, DataCube]") -> Dataset:
     """
     Computes phenology metrics based on the `Phenolopy <https://github.com/lewistrotter/PhenoloPy>`_ implementation.
 
