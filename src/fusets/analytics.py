@@ -1,11 +1,13 @@
 import importlib.util
-from typing import Union
+from typing import Union, Any
 
 from xarray import DataArray, Dataset
 
 _openeo_exists = importlib.util.find_spec("openeo") is not None
 if _openeo_exists:
     from openeo import DataCube
+else:
+    DataCube = Any  # Fallback when openeo not installed
 
 
 def phenology(array: Union[DataArray, DataCube]) -> Dataset:
