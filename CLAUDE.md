@@ -251,3 +251,34 @@ jupyter notebook S1_S2_MOGPR_Fusion_Tutorial.ipynb
 ```
 
 Both notebooks include extensive documentation, error handling, and are designed for both educational and production use.
+
+## SITS Integration for MOGPR Workflows
+
+FuseTS provides comprehensive integration with the R `sits` package for multi-sensor data fusion using MOGPR. For detailed workflows:
+
+**📘 Primary Documentation**: `SITS_TO_MOGPR_GUIDE.md` - Complete guide for sits datacube → MOGPR workflows
+
+### Quick Overview: sits + MOGPR
+
+**Two Main Workflows**:
+
+1. **Point-Based MOGPR** (recommended for validation):
+   - Extract time series at sample points using `sits_get_data()`
+   - Export to CSV with `sits_to_fusets_csv()`
+   - Load in Python with `load_sits_csv()`
+   - Apply MOGPR fusion for gap-filling
+   - Extract phenology metrics
+
+2. **Raster-Based MOGPR** (for spatial mapping):
+   - Create spatial datacube with `sits_cube()`
+   - Export as GeoTIFF stacks with `sits_cube_to_fusets_geotiff()`
+   - Load with `load_sits_geotiff()`
+   - Apply pixel-wise MOGPR fusion
+   - Generate phenology maps
+
+### Key Files:
+- **Bridge Module**: `src/fusets/io/sits_bridge.py` - Data loading utilities
+- **R Helpers**: `scripts/sits_to_fusets.R` - Export functions for sits
+- **Example Notebook**: `notebooks/Paddyfield_Phenology_sits_FuseTS.ipynb`
+- **Workflow Guide**: `SITS_FUSETS_WORKFLOW.md` - General sits integration
+- **MOGPR Guide**: `SITS_TO_MOGPR_GUIDE.md` - Detailed MOGPR fusion workflows
