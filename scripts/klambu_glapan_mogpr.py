@@ -74,6 +74,9 @@ def parse_args(argv=None):
                    choices=["ascending", "descending", "any"], help="S1 orbit state")
     p.add_argument("--n-points", type=int, default=200, help="MOGPR sample points")
     p.add_argument("--seed", type=int, default=42, help="random seed for sampling")
+    p.add_argument("--mask", default=None,
+                   help="paddy/land-cover mask raster; non-positive pixels set to NaN "
+                        "so fusion only runs on rice (reprojected to the cube grid)")
     p.add_argument("--points-shp", default=None,
                    help="sample at the centroids of this polygon/point layer "
                         "(carries its attributes) instead of random points — for validation")
@@ -193,6 +196,23 @@ def build_datacube(args, bbox, geom_wgs84, periods, ncpath):
 
     cube = xr.concat(slices, dim="t").sortby("t").transpose("t", "y", "x")
     cube = cube.rio.write_crs(args.crs)
+
+    # Optional: clip to a paddy/land-cover mask so fusion only runs on rice.
+    if args.mask:
+        import rioxarray as _rxr
+        from rasterio.warp import transform_bounds
+        ref = cube["S2ndvi"].isel(t=0)
+        # window-read only the AOI footprint of a possibly continent-wide mask
+        m = _rxr.open_rasterio(args.mask, masked=True, chunks={"x": 2048, "y": 2048}).squeeze()
+        minx, miny, maxx, maxy = ref.rio.bounds()
+        mb = transform_bounds(ref.rio.crs, m.rio.crs, minx, miny, maxx, maxy)
+        m = m.rio.clip_box(*mb).compute()
+        m = m.rio.reproject_match(ref)              # mask -> cube grid (handles CRS)
+        keep = (m > 0).values
+        cube = cube.where(keep)
+        frac = float(np.nanmean(keep)) * 100
+        log(f"Applied paddy mask {Path(args.mask).name}: {frac:.1f}% of grid kept as rice")
+
     ncpath.parent.mkdir(parents=True, exist_ok=True)
     enc = {v: {"zlib": True, "complevel": 4} for v in cube.data_vars}
     cube.to_netcdf(ncpath, encoding=enc)
