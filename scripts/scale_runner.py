@@ -243,28 +243,42 @@ def process_tile(tile, cfg):
     if cfg["resume"] and done.exists():
         return tile["id"], "skip", 0
     tdir.mkdir(parents=True, exist_ok=True)
+    cube_path = tdir / "cube.nc"
+    empty_marker = tdir / ".empty"
     t0 = time.time()
     try:
-        cube = build_tile_cube(tile["wgs84"], cfg)
-        if cube is None:
-            (tdir / ".empty").write_text("no data")
+        # ---- Phase 1: extraction (cached) -------------------------------
+        if not cfg.get("no_cache") and empty_marker.exists():
             done.write_text("empty")
             return tile["id"], "empty", 0
-        if cfg["mask"]:
-            cube = apply_mask(cube, cfg["mask"], cfg["crs"])
+        if not cfg.get("no_cache") and cube_path.exists():
+            cube = xr.open_dataset(cube_path).load().rio.write_crs(cfg["crs"])
+            stage = "cached"
+        else:
+            cube = build_tile_cube(tile["wgs84"], cfg)
+            if cube is None:
+                empty_marker.write_text("no data")
+                done.write_text("empty")
+                return tile["id"], "empty", 0
+            enc = {v: {"zlib": True, "complevel": 4} for v in cube.data_vars}
+            cube.to_netcdf(cube_path, encoding=enc)   # cache for re-runs
+            stage = "extracted"
 
+        # ---- Phase 2: fusion (always; mask applied here, not cached) -----
+        cube_f = apply_mask(cube, cfg["mask"], cfg["crs"]) if cfg["mask"] else cube
         if cfg["granularity"] == "parcel":
             parcels = gpd.read_file(cfg["parcels"]).to_crs(cfg["crs"])
             parcels = parcels[parcels.intersects(box(*tile["utm"]))]
-            df = fuse_parcels(cube, parcels, cfg)
+            df = fuse_parcels(cube_f, parcels, cfg)
             df.to_csv(tdir / "parcels.csv", index=False)
             n = len(df)
         else:
-            ds, n = fuse_raster(cube, cfg)
+            ds, n = fuse_raster(cube_f, cfg)
             for v in ds.data_vars:
                 ds[v].rio.write_crs(cfg["crs"]).rio.to_raster(tdir / f"{v}.tif", compress="lzw")
-        done.write_text(json.dumps({"units": int(n), "secs": round(time.time() - t0)}))
-        return tile["id"], "ok", n
+        done.write_text(json.dumps({"units": int(n), "stage": stage,
+                                    "secs": round(time.time() - t0)}))
+        return tile["id"], f"ok:{stage}", n
     except Exception as e:
         (tdir / ".error").write_text(repr(e))
         return tile["id"], f"error: {e}", 0
@@ -322,8 +336,12 @@ def parse_args(argv=None):
     p.add_argument("--max-seasons", type=int, default=3)
     p.add_argument("--workers", type=int, default=4)
     p.add_argument("--outdir", default=None, help="output dir (required unless --dry-run)")
-    p.add_argument("--resume", action="store_true", default=True)
-    p.add_argument("--no-resume", dest="resume", action="store_false")
+    p.add_argument("--resume", action="store_true", default=True,
+                   help="skip tiles whose products (.done) already exist (default on)")
+    p.add_argument("--no-resume", dest="resume", action="store_false",
+                   help="re-fuse all tiles; cached cube.nc is still reused (extraction skipped)")
+    p.add_argument("--no-cache", action="store_true",
+                   help="ignore/overwrite cached tile datacubes (force re-extraction)")
     p.add_argument("--limit-tiles", type=int, default=None, help="process only the first N tiles (testing)")
     p.add_argument("--dry-run", action="store_true", help="list tiles and exit")
     return p.parse_args(argv)
