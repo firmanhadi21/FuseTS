@@ -137,3 +137,6 @@ FuseTS_temp/
 
 # Intermediate Sentinel-1 processing tiles (regenerable scratch rasters)
 data/sits_exports/temp_s1_processing/
+
+# scale_runner per-run logs (regenerable)
+output/**/run.log

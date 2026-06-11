@@ -106,6 +106,31 @@ Last updated: 2026-06-11.
 - Caveat: triple-class is where the two diverge most (partly real recovery, partly
   peakvalley over-segmentation at `drop_thr 0.12`); 1,417 conservative omissions.
 
+## 7b. Jatiluhur 50 m wall-to-wall (West Java, UTM 48S) — COMPLETE (HPC)
+
+- **First HPC run.** Same AOI/mask/dates/`drop_thr` as §7; only granularity changed
+  (`grid 500 m` → `pixel 50 m`). 24 × 10 km tiles, **24 workers**, BLAS pinned to 1.
+  No cube cache on the fresh box → all tiles downloaded: **94.2 min wall-clock** for
+  the full AOI. Merged GeoTIFFs in `output/jatiluhur_50m/`.
+- **Scale:** 550 × 1689 px @ 50 m; **451,426 paddy px** with ≥1 cycle (~55× the 8,151
+  cells at 500 m). Mean n_seasons (≥1) = **2.80** raw.
+- **Headline finding — per-pixel over-segmentation:** **25.8% of paddy px report > 3
+  seasons** (up to 10), a tail that did **not** exist at 500 m. Single 50 m pixels are
+  noisier than averaged 500 m cells, so peakvalley at `drop_thr 0.12` reads small wiggles
+  as extra cycles.
+- **Cross-validation vs `cropping_intensity.tif`** (consensus MT 2024/25; reprojected to
+  50 m UTM 48S, nearest; n = 451,426): **39.8% exact** (was 56.2% at 500 m), **93.5%
+  within ±1** (was 96.5%). Direction holds — **MOGPR detects more** (mean clipped 2.41 vs
+  2.04; higher 46.8% vs lower 13.5%). The exact-class drop is driven entirely by the n>3
+  tail, not random disagreement (within-1 stays high).
+- **Takeaway:** 50 m is viable for *mapping* (POS/peak/LOS) but the **`n_seasons` count
+  needs a noise-robust detector at pixel scale** (raise `drop_thr`, add min peak
+  separation/amplitude, or light pre-smooth). Sharpens §10 — now *required* for credible
+  50 m cropping-intensity. See `output/jatiluhur_50m/RESULTS.md`.
+- **New reusable tool:** `scripts/cross_validate_cropping_intensity.py` (confusion matrix,
+  exact/within-1, per-class, direction, raw-distribution incl. over-segmentation, maps) —
+  the 500 m validation was ad-hoc; this makes it repeatable for any AOI.
+
 ## 8. HPC notes
 
 - User's HPC = **JupyterHub box with sudo** → effectively one **2× H100** workstation
@@ -116,6 +141,15 @@ Last updated: 2026-06-11.
   Use **conda, not `apt`**, for the Python geo stack (avoids PROJ/GDAL conflicts).
 - For 50 m all-Java: tiled `pixel` granularity, resumable, run over time; cache makes
   re-fusion cheap. GPU (`mogpr_gpu`) optional if a card frees up.
+- **Env actually built on the box (2026-06-11):** `/opt/conda` (conda 24.9 + mamba 1.5),
+  **224 cores**, no GPU used. `mamba env create -f environment.yml` → `fusets`, then
+  `pip install -e . --no-deps`. MPC reachable. **Caveat:** the prebuilt
+  `vam.whittaker==2.0.6` wheel fails on this glibc (`undefined symbol: __log_finite`) and
+  a `--no-binary` rebuild also failed — **not needed for the MOGPR/peakvalley path**
+  (`scale_runner` imports only `fusets.mogpr` + peakvalley), so it does not block fusion
+  runs; only the optical-only Whittaker comparison needs it. Worker sizing: set
+  `--workers ≈ tile count` and pin BLAS to 1 thread (`OMP/OPENBLAS/MKL/NUMEXPR_NUM_THREADS=1`)
+  to avoid oversubscription, since fusion is single-process per tile.
 
 ## 9. Git (fork `firmanhadi21/FuseTS`, branch `main`)
 
@@ -137,11 +171,17 @@ datacubes (`*.nc`, incl. tile `cube.nc` caches), throwaway test dirs (smoke, cac
 
 - ✅ Full Jatiluhur run + cross-validation vs `cropping_intensity.tif` — done.
 - ✅ BulakBakal data published (public).
+- ✅ **Jatiluhur 50 m wall-to-wall on HPC** (§7b) — done; exposed per-pixel
+  over-segmentation (25.8% px > 3 seasons).
+- **`drop_thr` tuning now REQUIRED (was a refinement):** the 50 m run shows the n>3 tail
+  dominates the exact-class drop. Sweep `drop_thr` (+ min peak separation/amplitude or a
+  light pre-smooth) on the existing `output/jatiluhur_50m` cube caches, re-score with
+  `cross_validate_cropping_intensity.py`, pick the value, then re-fuse (cache makes it cheap).
 - Rentang run (needs an AOI boundary — not present in either repo).
-- Province / all-Java at 500 m grid (Mac or HPC); 50 m wall-to-wall on HPC.
-- Tune `drop_thr` (or add a multi-season-aware metric) to reduce triple-class
-  over-segmentation seen in both BulakBakal and the Jatiluhur cross-validation.
-- Paper: fold in the Jatiluhur cross-validation result; add figures; tighten to a venue.
-- Optional: sync Demak notebooks if wanted.
+- Province / all-Java at 500 m grid; 50 m wall-to-wall for more AOIs on HPC (224 cores).
+- Paper: fold in the Jatiluhur 500 m **and 50 m** cross-validation results (incl. the
+  resolution/over-segmentation trade-off); add figures; tighten to a venue.
+- Optional: sync Demak notebooks if wanted; fix `vam.whittaker` on HPC if the optical-only
+  Whittaker comparison is needed there.
 
-Last updated: 2026-06-11 (after Jatiluhur full run + cross-validation).
+Last updated: 2026-06-11 (after Jatiluhur 50 m wall-to-wall run + cross-validation on HPC).
