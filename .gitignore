@@ -111,3 +111,24 @@ ENV/
 
 # macOS
 .DS_Store
+
+# --- S1+S2 MOGPR rice-phenology work ---
+# Secrets — NEVER commit (GEE service-account key + credentials)
+ee-geodetic.json
+settings.env
+*.env
+
+# Large datacubes / fused rasters (reproducible; too big for git)
+*.nc
+
+# Restricted ground-truth field data (third-party, used with permission)
+Validasi_Data_BulakBakal/
+output/bulak_bakal/
+output/bulak_bakal_fieldmean/
+
+# Reproducible derived outputs (selected artifacts force-added)
+output/
+output/klambu_glapan_smoke/
+
+# tooling
+.kilo/

@@ -6,8 +6,17 @@ library(sf)
 library(terra)
 library(dplyr)
 
+# =============================================================================
+# PORTABLE BASE DIRECTORY
+# Set FUSETS_HOME in the environment to override; otherwise use the current
+# working directory (run this script from the FuseTS repo root).
+# =============================================================================
+base_dir <- Sys.getenv("FUSETS_HOME")
+if (base_dir == "") base_dir <- getwd()
+cat("FuseTS base directory:", base_dir, "\n")
+
 # Source FuseTS helper functions
-source("/home/unika_sianturi/work/FuseTS/scripts/sits_to_fusets.R")
+source(file.path(base_dir, "scripts", "sits_to_fusets.R"))
 
 # =============================================================================
 # CONFIGURATION
@@ -18,7 +27,7 @@ cat("  S1 + S2 Data Extraction for Klambu-Glapan Area (sits + FuseTS)\n")
 cat("=======================================================================\n\n")
 
 # Load study area
-study_area_path <- "/home/unika_sianturi/work/FuseTS/data/klambu-glapan.shp"
+study_area_path <- file.path(base_dir, "data", "klambu-glapan.shp")
 
 cat("Loading study area:", study_area_path, "\n")
 study_area_raw <- st_read(study_area_path, quiet = TRUE)
@@ -93,7 +102,7 @@ n_points <- 200  # You can change this
 cat("\nNumber of random sample points:", n_points, "\n")
 
 # Output directory
-output_dir <- "/home/unika_sianturi/work/FuseTS/data/sits_exports"
+output_dir <- file.path(base_dir, "data", "sits_exports")
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 cat("Output directory:", output_dir, "\n\n")
@@ -198,11 +207,37 @@ s1_cube <- sits_cube(
 cat("✓ S1 cube retrieved\n")
 cat("  Tiles:", nrow(s1_cube), "\n")
 
+# ---------------------------------------------------------------------------
+# Regularize S1 onto a consistent time grid.
+# Sentinel-1 GRD scenes from MPC have irregular acquisition dates and
+# overlapping tiles. Regularizing onto a fixed period (here 12 days, matching
+# the S2/MOGPR target grid) gives one observation per period per pixel and
+# avoids the duplicate/irregular-date issues that break downstream fusion.
+# For pure point extraction this is optional, but it keeps S1 and S2 on
+# compatible time steps for MOGPR. Set FUSETS_SKIP_S1_REGULARIZE=1 to skip.
+# ---------------------------------------------------------------------------
+if (Sys.getenv("FUSETS_SKIP_S1_REGULARIZE") == "1") {
+  cat("Skipping S1 regularization (FUSETS_SKIP_S1_REGULARIZE=1)\n")
+  s1_cube_reg <- s1_cube
+} else {
+  cat("Regularizing S1 cube to a 12-day grid (this may take a while)...\n")
+  s1_reg_dir <- file.path(output_dir, "s1_regular")
+  dir.create(s1_reg_dir, showWarnings = FALSE, recursive = TRUE)
+  s1_cube_reg <- sits_regularize(
+    cube       = s1_cube,
+    period     = "P12D",
+    res        = 50,          # metres; matches the 50 m target resolution
+    output_dir = s1_reg_dir,
+    multicores = 2
+  )
+  cat("✓ S1 cube regularized\n")
+}
+
 # Extract time series at sample points
 cat("Extracting S1 time series at", n_points, "sample points...\n")
 cat("(This may take a few minutes depending on the number of points)\n")
 
-s1_samples <- sits_get_data(s1_cube, samples = sample_points)
+s1_samples <- sits_get_data(s1_cube_reg, samples = sample_points)
 
 cat("✓ S1 time series extracted\n")
 cat("  Samples:", nrow(s1_samples), "\n")
@@ -284,7 +319,7 @@ cat("NEXT STEPS\n")
 cat("-----------------------------------------------------------------------\n\n")
 
 cat("1. Open Python/Jupyter:\n")
-cat("   cd /home/unika_sianturi/work/FuseTS/notebooks\n")
+cat("   cd ", file.path(base_dir, "notebooks"), "\n", sep = "")
 cat("   jupyter notebook Paddyfield_Phenology_S1_S2_Fusion.ipynb\n\n")
 
 cat("2. Update file paths in the notebook (ALREADY DONE!):\n")

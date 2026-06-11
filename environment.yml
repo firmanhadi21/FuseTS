@@ -1,0 +1,42 @@
+# Conda environment for FuseTS MOGPR fusion + MPC (Planetary Computer) extraction
+# on macOS (Apple Silicon / arm64). Created for the Klambu-Glapan phenology work.
+#
+#   mamba env create -f environment.yml      # (or: conda env create -f environment.yml)
+#   conda activate fusets
+#   pip install vam.whittaker==2.0.6         # not on conda-forge; pip only
+#   pip install -e . --no-deps               # fusets itself, without the openeo/ccd pins
+#
+# Notes:
+#  - openeo and lcmap-pyccd are intentionally omitted: they are only used by the
+#    openeo backend and CCDC, neither of which is needed for local xarray MOGPR
+#    + phenology. fusets is installed with --no-deps for this reason.
+#  - numpy is held <2 for GPy / vam.whittaker C-API compatibility.
+name: fusets
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - "numpy<2"
+  - scipy
+  - pandas
+  - xarray
+  - matplotlib
+  - netcdf4
+  - h5netcdf
+  - dask
+  # --- MOGPR ---
+  - gpy>=1.10
+  # --- geospatial / raster IO ---
+  - rasterio
+  - rioxarray
+  - geopandas
+  - shapely
+  - pyproj
+  # --- Microsoft Planetary Computer (STAC) access ---
+  - pystac-client
+  - planetary-computer
+  - odc-stac
+  # --- notebooks ---
+  - jupyterlab
+  - ipykernel
+  - tqdm
