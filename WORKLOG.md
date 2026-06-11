@@ -89,13 +89,22 @@ Last updated: 2026-06-11.
 - **Compute reality:** per-tile cost is **74–128 min, dominated by MPC download** (fusion
   of ~1.5 k cells is minutes). Full Jatiluhur (8 tiles) ≈ 4–5 h at 2 workers / faster at 8.
 
-## 7. Jatiluhur results (West Java, UTM 48S)
+## 7. Jatiluhur results (West Java, UTM 48S) — COMPLETE
 
-- 2-tile validation (500 m grid): merged `n_seasons` over 2,767 cells →
-  **mean 1.96 seasons/cell** (0:516, 1:547, 2:1,322, 3:318) — more intensive
-  double/triple-cropping than Klambu, as expected for the Citarum/Jatiluhur system.
-- **Full 8-tile run IN PROGRESS** (8 workers; 2 tiles skipped via resume) →
-  `output/jatiluhur_grid_test/` AOI-wide GeoTIFFs.
+- **Full 8-tile run done:** 500 m grid, paddy-masked, **8 workers, 28.7 min**
+  wall-clock (6 new tiles; 2 skipped via `--resume`). Outputs:
+  `output/jatiluhur_grid_test/` (merged AOI GeoTIFFs) + `output/jatiluhur/`.
+- **Cropping intensity:** 8,151 cells, **mean 2.19 seasons/cell**
+  (0:1929, 1:1036, 2:3425, 3:1395) — Indonesia's most intensive rice belt
+  (Citarum/Jatiluhur), as expected.
+- **Cross-validation vs independent `cropping_intensity.tif`** (SAR classifier,
+  s1-land-cover repo; 50 m → 500 m majority-resampled; n = 5,873 cells):
+  **56.2% exact-class**, **96.5% within ±1 class**. Strongest on double-crop
+  (80% recall). **MOGPR detects more intensity** than the radar-only product
+  (mean 2.11 vs 1.98; higher 28% vs lower 16%) — the optical-fusion payoff.
+  See `output/jatiluhur/RESULTS.md`, `cross_validation_maps.png`, `cross_validation_cropping_intensity.csv`.
+- Caveat: triple-class is where the two diverge most (partly real recovery, partly
+  peakvalley over-segmentation at `drop_thr 0.12`); 1,417 conservative omissions.
 
 ## 8. HPC notes
 
@@ -110,19 +119,29 @@ Last updated: 2026-06-11.
 
 ## 9. Git (fork `firmanhadi21/FuseTS`, branch `main`)
 
-Pushed (code + docs only; secrets, `*.nc`, and restricted field data git-ignored):
+Pushed (secrets + `*.nc` datacubes always excluded; a staged-file secret-scan guard
+runs before each commit):
 - `4e776d2` — pipeline scripts, paper draft, scaling plan, Klambu results + figures
 - `21153e6` — `scale_runner.py` + `--mask`
 - `60d329e` — scale_runner two-phase cube cache
+- `fd264db` — WORKLOG.md
+- `298fc1c` — output data **+ BulakBakal ground-truth made public** (per maintainer
+  authorization; repo is PUBLIC). Datacubes still excluded.
+- `082d91d` — Jatiluhur scaled run + cross-validation vs cropping_intensity
 
-**Excluded by design:** `ee-geodetic.json`, `settings.env` (secrets — never tracked),
-datacubes (`*.nc`), `Validasi_Data_BulakBakal/` and `output/bulak_bakal*/` (third-party
-field data — pending publish permission). A staged-file secret-scan guard runs before each commit.
+**Always excluded:** `ee-geodetic.json`, `settings.env` (secrets — never tracked),
+datacubes (`*.nc`, incl. tile `cube.nc` caches), throwaway test dirs (smoke, cache_test).
+**Now public (was restricted):** BulakBakal field survey + validation outputs.
 
 ## 10. Open items / next steps
 
-- Finish full Jatiluhur run; cross-validate `n_seasons` vs `cropping_intensity.tif`.
+- ✅ Full Jatiluhur run + cross-validation vs `cropping_intensity.tif` — done.
+- ✅ BulakBakal data published (public).
 - Rentang run (needs an AOI boundary — not present in either repo).
 - Province / all-Java at 500 m grid (Mac or HPC); 50 m wall-to-wall on HPC.
-- Optional: decide on publishing BulakBakal data; sync Demak notebooks if wanted.
-- Paper: add figures (n_seasons comparison, validation scatter), tighten to a venue.
+- Tune `drop_thr` (or add a multi-season-aware metric) to reduce triple-class
+  over-segmentation seen in both BulakBakal and the Jatiluhur cross-validation.
+- Paper: fold in the Jatiluhur cross-validation result; add figures; tighten to a venue.
+- Optional: sync Demak notebooks if wanted.
+
+Last updated: 2026-06-11 (after Jatiluhur full run + cross-validation).
