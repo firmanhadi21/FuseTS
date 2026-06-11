@@ -1,0 +1,54 @@
+{
+  "n_cells": 314834,
+  "pred_res_m": 50.0,
+  "exact_class_agreement": 0.383,
+  "within_1_class": 0.8702,
+  "per_class": {
+    "1": {
+      "recall_mogpr": 0.16,
+      "precision_vs_ci": 0.4866
+    },
+    "2": {
+      "recall_mogpr": 0.4401,
+      "precision_vs_ci": 0.503
+    },
+    "3": {
+      "recall_mogpr": 0.5217,
+      "precision_vs_ci": 0.2568
+    }
+  },
+  "mean_mogpr_clipped": 1.964,
+  "mean_ci": 2.392,
+  "frac_mogpr_higher": 0.1448,
+  "frac_mogpr_lower": 0.4723,
+  "raw_n_seasons_distribution": {
+    "1": 85986,
+    "2": 154200,
+    "3": 55560,
+    "4": 15608,
+    "5": 3047,
+    "6": 390,
+    "7": 39,
+    "8": 3,
+    "9": 1
+  },
+  "raw_over_max_class": 19088,
+  "raw_over_max_class_frac": 0.0606,
+  "confusion_matrix_rows_mogpr_cols_ci": [
+    [
+      13762,
+      36004,
+      36220
+    ],
+    [
+      9875,
+      67863,
+      76462
+    ],
+    [
+      4647,
+      31059,
+      38942
+    ]
+  ]
+}

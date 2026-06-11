@@ -1,0 +1,33 @@
+{
+  "n_points": 681,
+  "n_fused": 681,
+  "n_failed_fusion": 0,
+  "drop_thr": 0.2,
+  "phase45_precision": 0.0855,
+  "phase45_recall": 0.1695,
+  "phase45_f1": 0.1136,
+  "phase45_confusion": {
+    "tp": 10,
+    "fp": 107,
+    "fn": 49,
+    "tn": 515
+  },
+  "overall_3class_accuracy": 0.3965,
+  "confusion_3class_rows_truth_cols_pred": {
+    "bare": {
+      "bare": 77,
+      "vegetative": 170,
+      "generative": 0
+    },
+    "vegetative": {
+      "bare": 85,
+      "vegetative": 183,
+      "generative": 49
+    },
+    "generative": {
+      "bare": 85,
+      "vegetative": 22,
+      "generative": 10
+    }
+  }
+}

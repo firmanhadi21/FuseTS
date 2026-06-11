@@ -1,0 +1,183 @@
+{
+  "ridge": {
+    "phase45": {
+      "precision": 0.5973,
+      "recall": 0.6697,
+      "f1": 0.6314
+    },
+    "acc_3class": 0.6778,
+    "confusion_3class": {
+      "bare": {
+        "bare": 1641,
+        "vegetative": 609,
+        "generative": 349
+      },
+      "vegetative": {
+        "bare": 746,
+        "vegetative": 3324,
+        "generative": 367
+      },
+      "generative": {
+        "bare": 538,
+        "vegetative": 441,
+        "generative": 1452
+      }
+    },
+    "per_region": [
+      {
+        "region": "Brebes_Tegal",
+        "n": 2002,
+        "n_gen": 546,
+        "p45_precision": 0.6876,
+        "p45_recall": 0.6209,
+        "p45_f1": 0.6526,
+        "acc3": 0.6439
+      },
+      {
+        "region": "Cirebon",
+        "n": 1053,
+        "n_gen": 511,
+        "p45_precision": 0.7202,
+        "p45_recall": 0.7104,
+        "p45_f1": 0.7153,
+        "acc3": 0.6838
+      },
+      {
+        "region": "Indramayu",
+        "n": 856,
+        "n_gen": 313,
+        "p45_precision": 0.6817,
+        "p45_recall": 0.9169,
+        "p45_f1": 0.782,
+        "acc3": 0.7418
+      },
+      {
+        "region": "Karawang",
+        "n": 1353,
+        "n_gen": 265,
+        "p45_precision": 0.717,
+        "p45_recall": 0.5736,
+        "p45_f1": 0.6373,
+        "acc3": 0.7834
+      },
+      {
+        "region": "Klambu",
+        "n": 518,
+        "n_gen": 173,
+        "p45_precision": 0.8359,
+        "p45_recall": 0.9422,
+        "p45_f1": 0.8859,
+        "acc3": 0.861
+      },
+      {
+        "region": "Pekalongan",
+        "n": 2687,
+        "n_gen": 146,
+        "p45_precision": 0.0839,
+        "p45_recall": 0.1712,
+        "p45_f1": 0.1126,
+        "acc3": 0.6308
+      },
+      {
+        "region": "Semarang_Demak",
+        "n": 998,
+        "n_gen": 214,
+        "p45_precision": 0.3994,
+        "p45_recall": 0.5748,
+        "p45_f1": 0.4713,
+        "acc3": 0.5731
+      }
+    ]
+  },
+  "lgbm": {
+    "phase45": {
+      "precision": 0.6757,
+      "recall": 0.6351,
+      "f1": 0.6548
+    },
+    "acc_3class": 0.7287,
+    "confusion_3class": {
+      "bare": {
+        "bare": 1778,
+        "vegetative": 350,
+        "generative": 422
+      },
+      "vegetative": {
+        "bare": 766,
+        "vegetative": 3744,
+        "generative": 369
+      },
+      "generative": {
+        "bare": 381,
+        "vegetative": 280,
+        "generative": 1377
+      }
+    },
+    "per_region": [
+      {
+        "region": "Brebes_Tegal",
+        "n": 2002,
+        "n_gen": 546,
+        "p45_precision": 0.7644,
+        "p45_recall": 0.5586,
+        "p45_f1": 0.6455,
+        "acc3": 0.7103
+      },
+      {
+        "region": "Cirebon",
+        "n": 1053,
+        "n_gen": 511,
+        "p45_precision": 0.71,
+        "p45_recall": 0.6517,
+        "p45_f1": 0.6796,
+        "acc3": 0.6847
+      },
+      {
+        "region": "Indramayu",
+        "n": 856,
+        "n_gen": 313,
+        "p45_precision": 0.6734,
+        "p45_recall": 0.9617,
+        "p45_f1": 0.7921,
+        "acc3": 0.75
+      },
+      {
+        "region": "Karawang",
+        "n": 1353,
+        "n_gen": 265,
+        "p45_precision": 0.8182,
+        "p45_recall": 0.6113,
+        "p45_f1": 0.6998,
+        "acc3": 0.861
+      },
+      {
+        "region": "Klambu",
+        "n": 518,
+        "n_gen": 173,
+        "p45_precision": 0.9576,
+        "p45_recall": 0.9133,
+        "p45_f1": 0.9349,
+        "acc3": 0.917
+      },
+      {
+        "region": "Pekalongan",
+        "n": 2687,
+        "n_gen": 146,
+        "p45_precision": 0.1899,
+        "p45_recall": 0.2329,
+        "p45_f1": 0.2092,
+        "acc3": 0.6859
+      },
+      {
+        "region": "Semarang_Demak",
+        "n": 998,
+        "n_gen": 214,
+        "p45_precision": 0.4641,
+        "p45_recall": 0.3925,
+        "p45_f1": 0.4253,
+        "acc3": 0.6323
+      }
+    ]
+  },
+  "baseline_scalar_rf_phase45_f1": 0.59
+}

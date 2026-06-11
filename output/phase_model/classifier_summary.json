@@ -1,0 +1,153 @@
+{
+  "n_points": 9467,
+  "n_generative": 2168,
+  "cv": "leave-one-region-out",
+  "phase45_classifier": {
+    "precision": 0.5777,
+    "recall": 0.6033,
+    "f1": 0.5903,
+    "tp": 1308,
+    "fp": 956,
+    "fn": 860,
+    "tn": 6343
+  },
+  "phase45_rule_baseline": {
+    "precision": 0.2238,
+    "recall": 0.2265,
+    "f1": 0.2251,
+    "tp": 491,
+    "fp": 1703,
+    "fn": 1677,
+    "tn": 5596
+  },
+  "accuracy_3class": 0.6741,
+  "accuracy_6class": 0.5247,
+  "confusion_3class": {
+    "bare": {
+      "bare": 1837,
+      "vegetative": 626,
+      "generative": 468
+    },
+    "vegetative": {
+      "bare": 643,
+      "vegetative": 3237,
+      "generative": 392
+    },
+    "generative": {
+      "bare": 445,
+      "vegetative": 511,
+      "generative": 1308
+    }
+  },
+  "per_region": [
+    {
+      "region": "Brebes_Tegal",
+      "n": 2002,
+      "n_generative": 546,
+      "p45_precision": 0.5854,
+      "p45_recall": 0.6777,
+      "p45_f1": 0.6282,
+      "acc3": 0.6374
+    },
+    {
+      "region": "Cirebon",
+      "n": 1053,
+      "n_generative": 511,
+      "p45_precision": 0.7256,
+      "p45_recall": 0.3777,
+      "p45_f1": 0.4968,
+      "acc3": 0.5859
+    },
+    {
+      "region": "Indramayu",
+      "n": 856,
+      "n_generative": 313,
+      "p45_precision": 0.6675,
+      "p45_recall": 0.8978,
+      "p45_f1": 0.7657,
+      "acc3": 0.7477
+    },
+    {
+      "region": "Karawang",
+      "n": 1353,
+      "n_generative": 265,
+      "p45_precision": 0.6848,
+      "p45_recall": 0.6642,
+      "p45_f1": 0.6743,
+      "acc3": 0.7857
+    },
+    {
+      "region": "Klambu",
+      "n": 518,
+      "n_generative": 173,
+      "p45_precision": 0.9549,
+      "p45_recall": 0.7341,
+      "p45_f1": 0.8301,
+      "acc3": 0.8378
+    },
+    {
+      "region": "Pekalongan",
+      "n": 2687,
+      "n_generative": 146,
+      "p45_precision": 0.109,
+      "p45_recall": 0.1575,
+      "p45_f1": 0.1289,
+      "acc3": 0.6673
+    },
+    {
+      "region": "Semarang_Demak",
+      "n": 998,
+      "n_generative": 214,
+      "p45_precision": 0.4012,
+      "p45_recall": 0.6449,
+      "p45_f1": 0.4946,
+      "acc3": 0.5601
+    }
+  ],
+  "feature_importance": [
+    [
+      "slope_d",
+      0.1868
+    ],
+    [
+      "ndvi_d",
+      0.1717
+    ],
+    [
+      "vh_d",
+      0.1113
+    ],
+    [
+      "days_to_POS",
+      0.1113
+    ],
+    [
+      "days_from_SOS",
+      0.1098
+    ],
+    [
+      "rel_pos",
+      0.0936
+    ],
+    [
+      "peak_ndvi",
+      0.0627
+    ],
+    [
+      "amplitude",
+      0.0566
+    ],
+    [
+      "los",
+      0.0544
+    ],
+    [
+      "n_seasons",
+      0.0247
+    ],
+    [
+      "in_season",
+      0.0171
+    ]
+  ]
+}

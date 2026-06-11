@@ -1,0 +1,182 @@
+{
+  "VH_only": {
+    "phase45": {
+      "precision": 0.56,
+      "recall": 0.4889,
+      "f1": 0.522
+    },
+    "acc_3class": 0.6116,
+    "per_region": [
+      {
+        "region": "Indramayu",
+        "n": 856,
+        "p45_f1": 0.733
+      },
+      {
+        "region": "Karawang",
+        "n": 1353,
+        "p45_f1": 0.7066
+      },
+      {
+        "region": "Cirebon",
+        "n": 1053,
+        "p45_f1": 0.695
+      },
+      {
+        "region": "Brebes_Tegal",
+        "n": 2002,
+        "p45_f1": 0.4208
+      },
+      {
+        "region": "Klambu",
+        "n": 518,
+        "p45_f1": 0.412
+      },
+      {
+        "region": "Semarang_Demak",
+        "n": 998,
+        "p45_f1": 0.2934
+      },
+      {
+        "region": "Pekalongan",
+        "n": 2687,
+        "p45_f1": 0.0101
+      }
+    ]
+  },
+  "OPT_only": {
+    "phase45": {
+      "precision": 0.6661,
+      "recall": 0.6799,
+      "f1": 0.6729
+    },
+    "acc_3class": 0.7184,
+    "per_region": [
+      {
+        "region": "Klambu",
+        "n": 518,
+        "p45_f1": 0.951
+      },
+      {
+        "region": "Indramayu",
+        "n": 856,
+        "p45_f1": 0.8005
+      },
+      {
+        "region": "Karawang",
+        "n": 1353,
+        "p45_f1": 0.794
+      },
+      {
+        "region": "Brebes_Tegal",
+        "n": 2002,
+        "p45_f1": 0.6818
+      },
+      {
+        "region": "Cirebon",
+        "n": 1053,
+        "p45_f1": 0.6535
+      },
+      {
+        "region": "Semarang_Demak",
+        "n": 998,
+        "p45_f1": 0.4883
+      },
+      {
+        "region": "Pekalongan",
+        "n": 2687,
+        "p45_f1": 0.2598
+      }
+    ]
+  },
+  "CONCAT": {
+    "phase45": {
+      "precision": 0.6757,
+      "recall": 0.6351,
+      "f1": 0.6548
+    },
+    "acc_3class": 0.7287,
+    "per_region": [
+      {
+        "region": "Klambu",
+        "n": 518,
+        "p45_f1": 0.9349
+      },
+      {
+        "region": "Indramayu",
+        "n": 856,
+        "p45_f1": 0.7921
+      },
+      {
+        "region": "Karawang",
+        "n": 1353,
+        "p45_f1": 0.6998
+      },
+      {
+        "region": "Cirebon",
+        "n": 1053,
+        "p45_f1": 0.6796
+      },
+      {
+        "region": "Brebes_Tegal",
+        "n": 2002,
+        "p45_f1": 0.6455
+      },
+      {
+        "region": "Semarang_Demak",
+        "n": 998,
+        "p45_f1": 0.4253
+      },
+      {
+        "region": "Pekalongan",
+        "n": 2687,
+        "p45_f1": 0.2092
+      }
+    ]
+  },
+  "ENSEMBLE_avg": {
+    "phase45": {
+      "precision": 0.7016,
+      "recall": 0.6172,
+      "f1": 0.6567
+    },
+    "acc_3class": 0.7121,
+    "per_region": [
+      {
+        "region": "Klambu",
+        "n": 518,
+        "p45_f1": 0.9422
+      },
+      {
+        "region": "Indramayu",
+        "n": 856,
+        "p45_f1": 0.8005
+      },
+      {
+        "region": "Karawang",
+        "n": 1353,
+        "p45_f1": 0.7683
+      },
+      {
+        "region": "Cirebon",
+        "n": 1053,
+        "p45_f1": 0.6866
+      },
+      {
+        "region": "Brebes_Tegal",
+        "n": 2002,
+        "p45_f1": 0.6229
+      },
+      {
+        "region": "Semarang_Demak",
+        "n": 998,
+        "p45_f1": 0.4205
+      },
+      {
+        "region": "Pekalongan",
+        "n": 2687,
+        "p45_f1": 0.0878
+      }
+    ]
+  }
+}
