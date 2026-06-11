@@ -118,17 +118,12 @@ ee-geodetic.json
 settings.env
 *.env
 
-# Large datacubes / fused rasters (reproducible; too big for git)
+# Large datacubes / fused rasters (reproducible; too big for git) — keep these out
 *.nc
 
-# Restricted ground-truth field data (third-party, used with permission)
-Validasi_Data_BulakBakal/
-output/bulak_bakal/
-output/bulak_bakal_fieldmean/
-
-# Reproducible derived outputs (selected artifacts force-added)
-output/
+# Throwaway test outputs (not worth versioning)
 output/klambu_glapan_smoke/
+output/cache_test/
 
 # tooling
 .kilo/
