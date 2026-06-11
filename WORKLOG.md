@@ -131,6 +131,32 @@ Last updated: 2026-06-11.
   exact/within-1, per-class, direction, raw-distribution incl. over-segmentation, maps) —
   the 500 m validation was ad-hoc; this makes it repeatable for any AOI.
 
+## 7c. drop_thr tuning → 0.20 (HPC) — COMPLETE
+
+- **Sweep** (`scripts/sweep_drop_thr.py`): re-counts seasons at 6 thresholds on the cached
+  50 m tile cubes. Key trick — MOGPR (`mogpr_1D`) is independent of `drop_thr`, so each px
+  is **fused once** and seasons re-counted per threshold; the whole sweep ≈ one re-fusion.
+  Output `output/jatiluhur_50m/sweep/sweep_summary.csv`.
+
+  | drop_thr | exact | within-1 | over>3 | mean MOGPR | mean CI |
+  |---|---|---|---|---|---|
+  | 0.12 (baseline) | 39.8% | 93.5% | **25.7%** | 2.41 | 2.04 |
+  | 0.15 | 45.4% | 94.7% | 13.2% | 2.18 | 2.05 |
+  | **0.20 (chosen)** | **46.3%** | **94.8%** | **4.0%** | 1.85 | 2.08 |
+  | 0.25 | 41.0% | 93.4% | 1.2% | 1.62 | 2.10 |
+  | 0.30 | 34.2% | 91.6% | 0.4% | 1.47 | 2.12 |
+  | 0.40 | 22.8% | 87.2% | 0.06% | 1.28 | 2.15 |
+
+  **0.20 maximises exact-class + within-±1 and cuts over-segmentation 25.7%→4.0%**; above it
+  the detector under-counts (mean < CI, exact falls). 0.20 = inflection point.
+- **Full re-fuse at 0.20** → `output/jatiluhur_50m_thr0.20/` (separate dir; 0.12 baseline
+  kept). Reused cached `cube.nc` via symlinks — **no MPC re-download**. 24/24 tiles, all 10
+  per-season products merged. Cross-val (n = 396,178): **46.3% exact, 94.8% within-1, 4.0%
+  over-seg**; direction now slightly conservative (mean 1.85 vs CI 2.08; higher 16.7% /
+  lower 37.1%) — the spurious extra cycles are gone. See
+  `output/jatiluhur_50m_thr0.20/RESULTS.md`.
+- **0.20 is the production threshold for 50 m per-pixel** going forward (incl. Rentang).
+
 ## 8. HPC notes
 
 - User's HPC = **JupyterHub box with sudo** → effectively one **2× H100** workstation
@@ -173,15 +199,16 @@ datacubes (`*.nc`, incl. tile `cube.nc` caches), throwaway test dirs (smoke, cac
 - ✅ BulakBakal data published (public).
 - ✅ **Jatiluhur 50 m wall-to-wall on HPC** (§7b) — done; exposed per-pixel
   over-segmentation (25.8% px > 3 seasons).
-- **`drop_thr` tuning now REQUIRED (was a refinement):** the 50 m run shows the n>3 tail
-  dominates the exact-class drop. Sweep `drop_thr` (+ min peak separation/amplitude or a
-  light pre-smooth) on the existing `output/jatiluhur_50m` cube caches, re-score with
-  `cross_validate_cropping_intensity.py`, pick the value, then re-fuse (cache makes it cheap).
-- Rentang run (needs an AOI boundary — not present in either repo).
+- ✅ **`drop_thr` tuned → 0.20** (§7c): sweep on cached cubes, full re-fuse, cross-val.
+  Exact 39.8%→46.3%, over-seg 25.7%→4.0%. **0.20 is the production threshold for 50 m.**
+- **Rentang run — NEXT.** Same pipeline at 50 m, `drop_thr 0.20` from the start. **Blocker:
+  needs an AOI boundary vector** (irrigation `petak`/admin `.gpkg`/`.shp`, like
+  `jatiluhur_petak_4326.gpkg`) — not present in either repo; obtain before running.
+  West Java → likely EPSG:32748 (verify).
 - Province / all-Java at 500 m grid; 50 m wall-to-wall for more AOIs on HPC (224 cores).
 - Paper: fold in the Jatiluhur 500 m **and 50 m** cross-validation results (incl. the
   resolution/over-segmentation trade-off); add figures; tighten to a venue.
 - Optional: sync Demak notebooks if wanted; fix `vam.whittaker` on HPC if the optical-only
   Whittaker comparison is needed there.
 
-Last updated: 2026-06-11 (after Jatiluhur 50 m wall-to-wall run + cross-validation on HPC).
+Last updated: 2026-06-11 (after Jatiluhur 50 m run, drop_thr tuning → 0.20, on HPC).
