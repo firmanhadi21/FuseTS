@@ -157,6 +157,22 @@ Last updated: 2026-06-11.
   `output/jatiluhur_50m_thr0.20/RESULTS.md`.
 - **0.20 is the production threshold for 50 m per-pixel** going forward (incl. Rentang).
 
+## 7d. Rentang (West Java, Indramayu/Cirebon, UTM 49S) — COMPLETE (HPC)
+
+- **AOI sourced** from the national irrigation layer in the **idmai** repo
+  (`idmai/00_PROD/INPUT_DATA/SHP/VECTOR_IRRIGATION/Daerah_Irigasi_Web_IDMAI.shp`, 21,018
+  features); extracted `nama_di='D.I. Rentang'` (kode_di 0000000182, Pusat) →
+  `data/aois/rentang_di_4326.gpkg` (865 km², EPSG:32749). The §10 blocker is resolved.
+- **Run:** 50 m pixel, **`drop_thr 0.20`**, 20×10 km tiles / 20 workers, ~96 min. 20/20
+  tiles, all per-season products merged. 362,206 paddy px, mean raw n_seasons 2.38
+  (very intensive — Cimanuk rice bowl).
+- **Cross-val** (n=362,206): **42.5% exact, 90.4% within-1**, mean 2.19 vs CI 2.35
+  (MOGPR slightly conservative). Over-seg n>3 = **14.2%**.
+- **Key finding — `drop_thr` is not fully portable:** 0.20 gave 4.0% over-seg at Jatiluhur
+  but 14.2% at Rentang. Partly real (Rentang more intensive: CI 2.35 vs 2.08; triple recall
+  50%), partly residual over-segmentation. **Recommend per-AOI sweep** (`sweep_drop_thr.py`
+  is cheap) rather than one global threshold. See `output/rentang_50m/RESULTS.md`.
+
 ## 8. HPC notes
 
 - User's HPC = **JupyterHub box with sudo** → effectively one **2× H100** workstation
@@ -201,14 +217,14 @@ datacubes (`*.nc`, incl. tile `cube.nc` caches), throwaway test dirs (smoke, cac
   over-segmentation (25.8% px > 3 seasons).
 - ✅ **`drop_thr` tuned → 0.20** (§7c): sweep on cached cubes, full re-fuse, cross-val.
   Exact 39.8%→46.3%, over-seg 25.7%→4.0%. **0.20 is the production threshold for 50 m.**
-- **Rentang run — NEXT.** Same pipeline at 50 m, `drop_thr 0.20` from the start. **Blocker:
-  needs an AOI boundary vector** (irrigation `petak`/admin `.gpkg`/`.shp`, like
-  `jatiluhur_petak_4326.gpkg`) — not present in either repo; obtain before running.
-  West Java → likely EPSG:32748 (verify).
+- ✅ **Rentang run done** (§7d): AOI found in idmai repo; 50 m @ 0.20, 42.5% exact,
+  14.2% over-seg → exposed that `drop_thr` needs **per-AOI** calibration.
+- **Per-AOI `drop_thr` sweep** is now the recommended workflow before each new AOI's
+  production run (sweep is cheap — fuses once, re-counts many thresholds).
 - Province / all-Java at 500 m grid; 50 m wall-to-wall for more AOIs on HPC (224 cores).
 - Paper: fold in the Jatiluhur 500 m **and 50 m** cross-validation results (incl. the
   resolution/over-segmentation trade-off); add figures; tighten to a venue.
 - Optional: sync Demak notebooks if wanted; fix `vam.whittaker` on HPC if the optical-only
   Whittaker comparison is needed there.
 
-Last updated: 2026-06-11 (after Jatiluhur 50 m run, drop_thr tuning → 0.20, on HPC).
+Last updated: 2026-06-11 (after Jatiluhur 50 m + drop_thr→0.20 + Rentang 50 m, on HPC).
