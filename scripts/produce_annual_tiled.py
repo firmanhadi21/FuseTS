@@ -98,55 +98,80 @@ def process_tile(tile, cfg, mr=None, clf=None):
         return tile["id"], "skip", json.loads(done.read_text())
     tdir.mkdir(parents=True, exist_ok=True)
     crs = f"EPSG:{tile['utm']}"; bbox = tile["bbox"]; W = cfg["window"]
-    try:
+    cube_path = tdir / "cube.nc"; fused_path = tdir / "fused.npz"
+    no_cache = cfg.get("no_cache", False)
+
+    def _build_cube():
+        """Download S2 NDVI + load VH -> tile cube (the ~expensive, cacheable step)."""
         vh, periods = _load_vh_db(cfg["vh_stack"], cfg["year"], bbox, crs, cfg["res"])
-    except Exception as e:
-        done.write_text(json.dumps({"status": "empty", "err": str(e)})); return tile["id"], "empty", {}
-    if not np.isfinite(vh.values).any():
-        done.write_text(json.dumps({"status": "empty"})); return tile["id"], "empty", {}
-    ref = vh.isel(band=0, drop=True)
-    pinfo = {p["period"]: p for p in generate_periods(f"{cfg['year']}-01-01", f"{cfg['year']}-12-31", 12)}
-    cat = get_catalog()
-    nd_sl, vh_sl, tc = [], [], []
-    for bi, pn in enumerate(periods):
-        prd = pinfo.get(pn)
-        if prd is None:
-            continue
-        try:
-            s2 = list(cat.search(collections=["sentinel-2-l2a"], bbox=bbox,
-                                 datetime=f"{prd['start']}/{prd['end']}",
-                                 query={"eo:cloud_cover": {"lt": 90}}).items())
-            nd = s2_ndvi_composite(cat, s2, bbox, crs, cfg["res"]) if s2 else None
-        except Exception:
-            nd = None
-        nd = nd.rio.reproject_match(ref) if nd is not None else xr.full_like(ref, np.nan, "float32")
-        nd_sl.append(nd.assign_coords(y=ref.y, x=ref.x)); vh_sl.append(vh.isel(band=bi, drop=True))
-        tc.append(np.datetime64(prd["center"]))
-    cube = xr.Dataset({"S2ndvi": xr.concat(nd_sl, "t").assign_coords(t=tc),
-                       "VH": xr.concat(vh_sl, "t").assign_coords(t=tc)}).rio.write_crs(crs)
-    cube = apply_mask(cube, cfg["mask"], crs)
-    NDVI = cube["S2ndvi"].values; VH = cube["VH"].values
-    ys, xs = np.where(np.isfinite(NDVI).sum(0) >= 2)
-    if len(ys) == 0:
-        done.write_text(json.dumps({"status": "no_paddy"})); return tile["id"], "empty", {}
-    t_ord = np.array([pd.Timestamp(t).toordinal() for t in tc], float)
-    out_grid = np.arange(int(t_ord.min()), int(t_ord.max()) + 1, 12, float); L = len(out_grid)
-    ndvi_px = NDVI[:, ys, xs].T; vh_px = VH[:, ys, xs].T
-    # fuse
-    fused = np.full((len(ys), L), np.nan, "float32")
-    for i in range(len(ys)):
-        nd = ndvi_px[i]; vh_v = vh_px[i]; nv = np.isfinite(nd)
-        if nv.sum() < 2:
-            continue
-        data, tin = [nd[nv]], [t_ord[nv]]; mm = np.isfinite(vh_v)
-        if mm.sum() >= 4:
-            data.append(vh_v[mm]); tin.append(t_ord[mm])
-        if len(data) < 2:
-            continue
-        try:
-            om, *_ = mogpr_1D(data, tin, 0, out_grid, 1); fused[i] = np.ravel(om[0]).astype("float32")
-        except Exception:
-            pass
+        if not np.isfinite(vh.values).any():
+            return None
+        ref = vh.isel(band=0, drop=True)
+        pinfo = {p["period"]: p for p in generate_periods(f"{cfg['year']}-01-01", f"{cfg['year']}-12-31", 12)}
+        cat = get_catalog()
+        nd_sl, vh_sl, tc = [], [], []
+        for bi, pn in enumerate(periods):
+            prd = pinfo.get(pn)
+            if prd is None:
+                continue
+            try:
+                s2 = list(cat.search(collections=["sentinel-2-l2a"], bbox=bbox,
+                                     datetime=f"{prd['start']}/{prd['end']}",
+                                     query={"eo:cloud_cover": {"lt": 90}}).items())
+                nd = s2_ndvi_composite(cat, s2, bbox, crs, cfg["res"]) if s2 else None
+            except Exception:
+                nd = None
+            nd = nd.rio.reproject_match(ref) if nd is not None else xr.full_like(ref, np.nan, "float32")
+            nd_sl.append(nd.assign_coords(y=ref.y, x=ref.x)); vh_sl.append(vh.isel(band=bi, drop=True))
+            tc.append(np.datetime64(prd["center"]))
+        return xr.Dataset({"S2ndvi": xr.concat(nd_sl, "t").assign_coords(t=tc),
+                           "VH": xr.concat(vh_sl, "t").assign_coords(t=tc)}).rio.write_crs(crs)
+
+    # ---- fused curves: from fused.npz cache, else from cube.nc cache, else download+fuse ----
+    if not no_cache and fused_path.exists() and cube_path.exists():
+        fz = np.load(fused_path)
+        fused, ys, xs, out_grid = fz["fused"], fz["ys"], fz["xs"], fz["out_grid"]
+        cube = xr.open_dataset(cube_path).rio.write_crs(crs)            # geometry only
+    else:
+        if not no_cache and cube_path.exists():
+            cube_full = xr.open_dataset(cube_path).rio.write_crs(crs)   # skip MPC download
+        else:
+            try:
+                cube_full = _build_cube()
+            except Exception as e:
+                done.write_text(json.dumps({"status": "empty", "err": str(e)})); return tile["id"], "empty", {}
+            if cube_full is None:
+                done.write_text(json.dumps({"status": "empty"})); return tile["id"], "empty", {}
+            if not no_cache:
+                enc = {v: {"zlib": True, "complevel": 4} for v in cube_full.data_vars}
+                cube_full.to_netcdf(cube_path, encoding=enc)            # cache cube -> no re-download
+        cube = apply_mask(cube_full, cfg["mask"], crs)
+        NDVI = cube["S2ndvi"].values; VH = cube["VH"].values
+        tc = list(cube["t"].values)
+        ys, xs = np.where(np.isfinite(NDVI).sum(0) >= 2)
+        if len(ys) == 0:
+            done.write_text(json.dumps({"status": "no_paddy"})); return tile["id"], "empty", {}
+        t_ord = np.array([pd.Timestamp(t).toordinal() for t in tc], float)
+        out_grid = np.arange(int(t_ord.min()), int(t_ord.max()) + 1, 12, float)
+        ndvi_px = NDVI[:, ys, xs].T; vh_px = VH[:, ys, xs].T
+        fused = np.full((len(ys), len(out_grid)), np.nan, "float32")
+        for i in range(len(ys)):
+            nd = ndvi_px[i]; vh_v = vh_px[i]; nv = np.isfinite(nd)
+            if nv.sum() < 2:
+                continue
+            data, tin = [nd[nv]], [t_ord[nv]]; mm = np.isfinite(vh_v)
+            if mm.sum() >= 4:
+                data.append(vh_v[mm]); tin.append(t_ord[mm])
+            if len(data) < 2:
+                continue
+            try:
+                om, *_ = mogpr_1D(data, tin, 0, out_grid, 1); fused[i] = np.ravel(om[0]).astype("float32")
+            except Exception:
+                pass
+        if not no_cache:
+            np.savez_compressed(fused_path, fused=fused, ys=ys, xs=xs, out_grid=out_grid)  # cache -> no re-fuse
+
+    L = len(out_grid)
     ok = np.isfinite(fused).all(1)
     if ok.sum() == 0:
         done.write_text(json.dumps({"status": "no_fuse"})); return tile["id"], "empty", {}
@@ -183,6 +208,7 @@ def main(argv=None):
     p.add_argument("--window", type=int, default=8); p.add_argument("--workers", type=int, default=16)
     p.add_argument("--out", required=True); p.add_argument("--limit-tiles", type=int, default=None)
     p.add_argument("--no-resume", dest="resume", action="store_false", default=True)
+    p.add_argument("--no-cache", action="store_true", help="don't read/write cube.nc + fused.npz")
     p.add_argument("--dry-run", action="store_true")
     a = p.parse_args(argv)
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
@@ -203,7 +229,7 @@ def main(argv=None):
     log("classifier trained; processing tiles...")
 
     cfg = dict(out=a.out, vh_stack=a.vh_stack, mask=a.mask, year=a.year, res=a.res,
-               yld=a.yld, min_run=a.min_run, window=a.window, resume=a.resume)
+               yld=a.yld, min_run=a.min_run, window=a.window, resume=a.resume, no_cache=a.no_cache)
     fn = partial(process_tile, cfg=cfg)
     stats = []
     # 'spawn' avoids the fork-after-numba(MiniROCKET) deadlock; initializer ships the
