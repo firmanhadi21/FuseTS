@@ -138,8 +138,16 @@ Outputs live in `output/phase_model/` (features_0104.csv, series_0104.npz+meta,
    2023/24 stack** (need that stack's path) for a clean apples-to-apples VH-CNN number.
 4. **Push MiniROCKET further** — more kernels, window tuning, extra channels (VH slope,
    day-of-year), 6-class/ordinal head.
-5. **Close the production loop** — apply the best classifier wall-to-wall over an AOI →
-   phase-4-5 area map × 5.8 t/ha → sanity-check vs BPS production stats / `calc_luas_panen`.
+5. **[DONE] Production loop** — `produce_estimate.py` (snapshot) + `produce_annual.py`
+   (annual). Brebes proof AOI (10,232 ha physical paddy): snapshot 2024-06-23 → 950 ha
+   generative → 5,511 t; **annual → mean 2.30 harvests/yr, 23,582 ha harvest area →
+   136,778 t @ 5.8 t/ha**. Time-series shows two clean harvest pulses (Apr + Aug) =
+   double-crop. Production = physical area × cropping intensity × yield; the 2.30 matches
+   the count-axis (Jatiluhur 2.19 / Rentang 2.38) — the two tracks converge.
+   ⚠️ Episode-counting flickers at `min_run=1` (unphysical 4–8 harvests tail) → re-run with
+   `min_run=2` (generative ≈ 30–45 d). Still needs sanity-check vs BPS / `calc_luas_panen`.
+   **Java-wide:** feasible but needs porting `produce_annual` into tiled `scale_runner` +
+   multi-hour NDVI download; Pekalongan accuracy caveat applies (fix §7.2 first).
 6. **True held-out V3** — need the CNN's train/test split for a fully fair head-to-head.
 7. **Commit** `run_v3_cnn.py` + `train_v3_mogpr_ensemble.py` + outputs (hold push for review).
 

@@ -1,0 +1,21 @@
+{
+  "aoi_cube": "output/brebes_snap_2024/cube.nc",
+  "target_date": "2024-06-23",
+  "paddy_px": 41159,
+  "fused_px": 40927,
+  "phase_counts": {
+    "bare": 23675,
+    "vegetative": 13451,
+    "generative": 3801
+  },
+  "phase45_generative_px": 3801,
+  "phase45_area_ha": 950.2,
+  "yield_t_ha": 5.8,
+  "production_t": 5511.4,
+  "caveats": [
+    "snapshot at one date (not annual)",
+    "flat yield",
+    "model ~68% phase-4-5 F1",
+    "no production ground-truth here"
+  ]
+}
