@@ -82,9 +82,17 @@ transfer; random splits leak via spatial autocorrelation).
 3-class acc) — adding MOGPR's *held-out* optical lifts your *in-sample-advantaged* V3 model.
 Even stronger: **OPT-only alone (held-out 68.2%) beats the V3 CNN (in-sample 64.0%)** — the
 optical is simply the better signal for the generative phase. Per-region the optical helps
-most where V3 is weak: Klambu 80→95, Karawang 68→75, Pekalongan 7→14. (Note: STACK sits
-*below* OPT-only — the weaker V3 arm drags it down — so for production, **OPT-only / an
-optical-weighted blend may be the best operating point**, not an even stack.)
+most where V3 is weak: Klambu 80→95, Karawang 68→75, Pekalongan 7→14.
+
+**Weight-sweep (resolved the blend question), `weight_sweep_v3_mogpr.py`:** a *simple
+probability average* `blend = (1-w)·OPT + w·V3` beats both arms — **best at w_v3≈0.5 →
+71.5% F1** (+3.3 vs pure optical 68.2%; pure V3 = 64.0%). This **corrects the learned
+meta-stack** (66.7%): plain averaging > meta-LightGBM (which overfit on 7 regions). So V3
+is **not** redundant — it adds structural info on top of the optical.
+⚠️ **Caveat:** V3 probs are IN-SAMPLE → 71.5% is optimistic. **Honest held-out floor = pure
+MOGPR-optical 68.2%.** True blend gain needs a held-out V3 (§7).
+**Recommendation: MOGPR-optical is the essential core; a ~0.5 V3 blend adds real structural
+signal — confirm the true gain with a held-out V3.**
 
 Per-class (MiniROCKET): bare R61/P70, vegetative R86/P77, generative R64/P68.
 Per-region F1 (MiniROCKET): Klambu 93, Indramayu 79, Karawang 70, Cirebon 68, Brebes 65,
@@ -120,10 +128,10 @@ Outputs live in `output/phase_model/` (features_0104.csv, series_0104.npz+meta,
 
 ## 7. Future work / next steps (pick up here)
 
-1. **[DONE] V3 ⊕ MOGPR ensemble** — `output/phase_model/v3_mogpr_ensemble_summary.json`.
-   STACK − V3_only = **+2.6 F1** (yes, MOGPR lifts the real V3); OPT-only (68.2%) > V3 (64%).
-   Follow-up: try an **optical-weighted** blend (down-weight V3) since the even STACK sat
-   below OPT-only; and get a **true held-out V3** for a fully fair stack.
+1. **[DONE] V3 ⊕ MOGPR ensemble + weight-sweep** — `v3_mogpr_ensemble_summary.json`,
+   `weight_sweep_summary.json`. Best = **probability blend w_v3≈0.5 → 71.5% F1** (in-sample
+   V3 → optimistic); held-out floor = pure optical **68.2%**. Remaining: **true held-out V3**
+   (need its train/test split) to confirm the real blend gain.
 2. **Fix Pekalongan** (5.4% generative): inspect its curves/labels; try a region-specific
    model, domain adaptation, or flag it out-of-distribution.
 3. **Remove the V3 cross-domain confound** — run `run_v3_cnn.py` on V3's **native GEE
