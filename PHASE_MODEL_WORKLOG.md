@@ -144,8 +144,9 @@ Outputs live in `output/phase_model/` (features_0104.csv, series_0104.npz+meta,
    136,778 t @ 5.8 t/ha**. Time-series shows two clean harvest pulses (Apr + Aug) =
    double-crop. Production = physical area × cropping intensity × yield; the 2.30 matches
    the count-axis (Jatiluhur 2.19 / Rentang 2.38) — the two tracks converge.
-   ⚠️ Episode-counting flickers at `min_run=1` (unphysical 4–8 harvests tail) → re-run with
-   `min_run=2` (generative ≈ 30–45 d). Still needs sanity-check vs BPS / `calc_luas_panen`.
+   With realistic **`min_run=2`** (flicker suppressed): mean **1.86 harvests/yr, 19,014 ha →
+   110,278 t** — the defensible figure (truth between 1.86 and 2.30). Still needs sanity-check
+   vs BPS / `calc_luas_panen`.
    **Java-wide:** feasible but needs porting `produce_annual` into tiled `scale_runner` +
    multi-hour NDVI download; Pekalongan accuracy caveat applies (fix §7.2 first).
 6. **True held-out V3** — need the CNN's train/test split for a fully fair head-to-head.
