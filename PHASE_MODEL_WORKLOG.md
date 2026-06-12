@@ -217,3 +217,25 @@ For a *live* 12-day product, three things make the **newest period the weak spot
 Constellation is being refreshed (S2C launched Sep 2024), so revisit is improving, not
 declining. Availability/transient MPC failures are handled as gaps (per-period try/except,
 resumable) — not a blocker, but budget for retries over ~11k queries/Java-run.
+
+### Paddy-mask choice: predicted (de facto) vs LBS (de jure)
+
+The Java run masks to the **predicted SAR-classifier consensus paddy**
+(`cropping_intensity_consensus_mt2024_25/paddy_mask.tif`, **~2.30 M ha** / 23,012 km²) —
+**NOT** the official LBS registry (`LBS_Jawa_50m.shp`, **~3.48 M ha** / 34,769 km²).
+Predicted is **~34% smaller** than LBS.
+
+**Why predicted is the right denominator for *production*:** you only harvest fields that
+were actually *planted* — de facto detected cultivation. **LBS (de jure registered land)
+includes paddy that sat fallow or was converted** in a given year → it would *over*-count
+active area.
+
+**Honest framing of the resulting number:** the ~34% gap is **partly real** (genuinely
+non-cropped land LBS still lists) and **partly the classifier's omission error** (real paddy
+the SAR missed — same model family that fails on Pekalongan-type areas). Net: the predicted
+mask gives a **conservative, detected-cultivation** estimate — it won't over-count fallow,
+but may **miss some real paddy** → the production figure **errs LOW**, the safer direction.
+
+→ Report the national figure as *"annual production over **detected active paddy** (~2.3 M
+ha)"*. **LBS stays as a cross-check** to reconcile with official BPS area statistics if needed
+(`LBS_Jawa_50m.*` in `idmai/DL/vh/model_6fase_enhanced_backward/`).
