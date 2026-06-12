@@ -199,3 +199,21 @@ cadence with slack. **Compute is NOT the binding constraint.**
 service is an **engineering + label-collection program** (data backend, national S1 preproc,
 national labels, dedicated compute), not a parameter change. Suited to a government agency
 (BPS / Kementan / BRIN).
+
+### Near-real-time data availability & latency (operational caveat)
+
+S2 source = **MPC `sentinel-2-l2a`** (NOT GEE). Scenes for **2024 are fully available**;
+the VH stack covers 2024–2026 so **2025/26 runs are also possible** (classifier is 2024-
+trained → cross-year phenology assumed, unvalidated).
+
+For a *live* 12-day product, three things make the **newest period the weak spot**:
+1. **Ingestion lag** — MPC publishes S2 L2A ~**1–3 days** after acquisition. → effective
+   product latency ≈ **~1 week** (lag + waiting for the period to fill).
+2. **MOGPR edge effect** — the fused curve is least constrained at the *end* of the series
+   (no future obs to anchor the GP), so the most-recent phase call (the "harvest-ready
+   *now*?" question) is the **most uncertain**; it firms up as the next period re-anchors it.
+3. **Clouds** — wet-season gaps with no future data yet to recover them.
+→ **Treat the latest period's phase as provisional**; historical periods are solid.
+Constellation is being refreshed (S2C launched Sep 2024), so revisit is improving, not
+declining. Availability/transient MPC failures are handled as gaps (per-period try/except,
+resumable) — not a blocker, but budget for retries over ~11k queries/Java-run.
