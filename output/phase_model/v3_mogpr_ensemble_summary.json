@@ -1,0 +1,138 @@
+{
+  "V3_only": {
+    "phase45": {
+      "precision": 0.6176,
+      "recall": 0.6651,
+      "f1": 0.6405
+    },
+    "acc_3class": 0.644,
+    "per_region": [
+      {
+        "region": "Klambu",
+        "n": 518,
+        "p45_f1": 0.7977
+      },
+      {
+        "region": "Indramayu",
+        "n": 856,
+        "p45_f1": 0.7918
+      },
+      {
+        "region": "Cirebon",
+        "n": 1053,
+        "p45_f1": 0.757
+      },
+      {
+        "region": "Karawang",
+        "n": 1353,
+        "p45_f1": 0.6809
+      },
+      {
+        "region": "Brebes_Tegal",
+        "n": 2002,
+        "p45_f1": 0.6381
+      },
+      {
+        "region": "Semarang_Demak",
+        "n": 998,
+        "p45_f1": 0.3499
+      },
+      {
+        "region": "Pekalongan",
+        "n": 2687,
+        "p45_f1": 0.0654
+      }
+    ]
+  },
+  "OPT_only": {
+    "phase45": {
+      "precision": 0.694,
+      "recall": 0.6707,
+      "f1": 0.6821
+    },
+    "acc_3class": 0.7215,
+    "per_region": [
+      {
+        "region": "Klambu",
+        "n": 518,
+        "p45_f1": 0.9558
+      },
+      {
+        "region": "Indramayu",
+        "n": 856,
+        "p45_f1": 0.828
+      },
+      {
+        "region": "Karawang",
+        "n": 1353,
+        "p45_f1": 0.8235
+      },
+      {
+        "region": "Cirebon",
+        "n": 1053,
+        "p45_f1": 0.6689
+      },
+      {
+        "region": "Brebes_Tegal",
+        "n": 2002,
+        "p45_f1": 0.658
+      },
+      {
+        "region": "Semarang_Demak",
+        "n": 998,
+        "p45_f1": 0.5144
+      },
+      {
+        "region": "Pekalongan",
+        "n": 2687,
+        "p45_f1": 0.2147
+      }
+    ]
+  },
+  "STACK": {
+    "phase45": {
+      "precision": 0.6463,
+      "recall": 0.6887,
+      "f1": 0.6668
+    },
+    "acc_3class": 0.6893,
+    "per_region": [
+      {
+        "region": "Klambu",
+        "n": 518,
+        "p45_f1": 0.9459
+      },
+      {
+        "region": "Indramayu",
+        "n": 856,
+        "p45_f1": 0.7769
+      },
+      {
+        "region": "Karawang",
+        "n": 1353,
+        "p45_f1": 0.7504
+      },
+      {
+        "region": "Cirebon",
+        "n": 1053,
+        "p45_f1": 0.7407
+      },
+      {
+        "region": "Brebes_Tegal",
+        "n": 2002,
+        "p45_f1": 0.6583
+      },
+      {
+        "region": "Semarang_Demak",
+        "n": 998,
+        "p45_f1": 0.3966
+      },
+      {
+        "region": "Pekalongan",
+        "n": 2687,
+        "p45_f1": 0.1392
+      }
+    ]
+  },
+  "caveat": "V3 probs are IN-SAMPLE; OPT/STACK CV is held-out leave-one-region-out."
+}

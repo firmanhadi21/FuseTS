@@ -107,7 +107,8 @@ def _process_cell(item, vh_stack, year, res):
             else np.full(out_grid.shape, np.nan, "float32")
         rows.append((fused, vh_grid, out_grid.astype("float32"),
                      float(pd.Timestamp(p.tanggal).toordinal()),
-                     int(p.fase), p.region, p.lokasi, p.get("sumber", "")))
+                     int(p.fase), p.region, p.lokasi, p.get("sumber", ""),
+                     float(p.bujur), float(p.lintang)))
     log(f"cell {utm},{_cx:.2f},{_cy:.2f}: {len(rows)}/{len(df)} series")
     return rows
 
@@ -142,8 +143,8 @@ def main(argv=None):
     keep = [r for r in allrows if len(r[0]) == L and len(r[1]) == L]
     ndvi = np.stack([r[0] for r in keep]); vh = np.stack([r[1] for r in keep])
     t_grid = keep[0][2]; label_ord = np.array([r[3] for r in keep], float)
-    meta = pd.DataFrame([(r[4], r[5], r[6], r[7]) for r in keep],
-                        columns=["fase", "region", "lokasi", "sumber"])
+    meta = pd.DataFrame([(r[4], r[5], r[6], r[7], r[8], r[9]) for r in keep],
+                        columns=["fase", "region", "lokasi", "sumber", "bujur", "lintang"])
     out = Path(a.out); out.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(str(out) + ".npz", ndvi=ndvi, vh=vh, t_grid=t_grid, label_ord=label_ord)
     meta.to_csv(str(out) + "_meta.csv", index=False)

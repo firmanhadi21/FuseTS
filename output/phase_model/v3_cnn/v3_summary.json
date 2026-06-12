@@ -1,0 +1,50 @@
+{
+  "model": "idmai V3 VH-CNN (applied to SNAP stack)",
+  "n_points": 9467,
+  "n_skipped": 0,
+  "evaluation": "IN-SAMPLE / cross-domain (NOT held-out) \u2014 see caveats",
+  "phase45": {
+    "precision": 0.6244,
+    "recall": 0.6564,
+    "f1": 0.64
+  },
+  "acc_3class": 0.6306,
+  "acc_6class": 0.51,
+  "per_region": [
+    {
+      "region": "Klambu",
+      "n": 518,
+      "p45_f1": 0.8531
+    },
+    {
+      "region": "Indramayu",
+      "n": 856,
+      "p45_f1": 0.7834
+    },
+    {
+      "region": "Cirebon",
+      "n": 1053,
+      "p45_f1": 0.7542
+    },
+    {
+      "region": "Brebes_Tegal",
+      "n": 2002,
+      "p45_f1": 0.6709
+    },
+    {
+      "region": "Karawang",
+      "n": 1353,
+      "p45_f1": 0.6352
+    },
+    {
+      "region": "Semarang_Demak",
+      "n": 998,
+      "p45_f1": 0.3403
+    },
+    {
+      "region": "Pekalongan",
+      "n": 2687,
+      "p45_f1": 0.0619
+    }
+  ]
+}
