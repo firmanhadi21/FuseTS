@@ -1,0 +1,32 @@
+<?xml version="1.0"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document>
+<Placemark><name>VP001 (s1)</name><Point><coordinates>110.747593,-7.039546,0</coordinates></Point></Placemark>
+<Placemark><name>VP002 (s1)</name><Point><coordinates>110.171825,-7.032756,0</coordinates></Point></Placemark>
+<Placemark><name>VP003 (s1)</name><Point><coordinates>110.573777,-6.948111,0</coordinates></Point></Placemark>
+<Placemark><name>VP004 (s1)</name><Point><coordinates>110.196721,-6.905110,0</coordinates></Point></Placemark>
+<Placemark><name>VP005 (s1)</name><Point><coordinates>110.492300,-7.151350,0</coordinates></Point></Placemark>
+<Placemark><name>VP006 (s1)</name><Point><coordinates>110.542997,-6.890625,0</coordinates></Point></Placemark>
+<Placemark><name>VP007 (s1)</name><Point><coordinates>110.601388,-6.953995,0</coordinates></Point></Placemark>
+<Placemark><name>VP008 (s1)</name><Point><coordinates>110.709571,-6.862561,0</coordinates></Point></Placemark>
+<Placemark><name>VP009 (s1)</name><Point><coordinates>110.576945,-6.849434,0</coordinates></Point></Placemark>
+<Placemark><name>VP010 (s1)</name><Point><coordinates>110.634431,-6.970743,0</coordinates></Point></Placemark>
+<Placemark><name>VP011 (s2)</name><Point><coordinates>110.224333,-6.963954,0</coordinates></Point></Placemark>
+<Placemark><name>VP012 (s2)</name><Point><coordinates>110.577398,-6.872972,0</coordinates></Point></Placemark>
+<Placemark><name>VP013 (s2)</name><Point><coordinates>110.649822,-7.032304,0</coordinates></Point></Placemark>
+<Placemark><name>VP014 (s2)</name><Point><coordinates>110.168657,-7.017819,0</coordinates></Point></Placemark>
+<Placemark><name>VP015 (s2)</name><Point><coordinates>110.745783,-6.980249,0</coordinates></Point></Placemark>
+<Placemark><name>VP016 (s2)</name><Point><coordinates>110.609989,-6.965312,0</coordinates></Point></Placemark>
+<Placemark><name>VP017 (s2)</name><Point><coordinates>110.747593,-6.825444,0</coordinates></Point></Placemark>
+<Placemark><name>VP018 (s2)</name><Point><coordinates>110.668833,-7.002881,0</coordinates></Point></Placemark>
+<Placemark><name>VP019 (s2)</name><Point><coordinates>110.596409,-6.999260,0</coordinates></Point></Placemark>
+<Placemark><name>VP020 (s2)</name><Point><coordinates>110.619494,-7.005597,0</coordinates></Point></Placemark>
+<Placemark><name>VP021 (s3)</name><Point><coordinates>110.652085,-6.894246,0</coordinates></Point></Placemark>
+<Placemark><name>VP022 (s3)</name><Point><coordinates>110.710476,-7.045883,0</coordinates></Point></Placemark>
+<Placemark><name>VP023 (s3)</name><Point><coordinates>110.637600,-6.862561,0</coordinates></Point></Placemark>
+<Placemark><name>VP024 (s3)</name><Point><coordinates>110.636242,-6.811864,0</coordinates></Point></Placemark>
+<Placemark><name>VP025 (s3)</name><Point><coordinates>110.686486,-6.981154,0</coordinates></Point></Placemark>
+<Placemark><name>VP026 (s3)</name><Point><coordinates>110.657064,-7.122833,0</coordinates></Point></Placemark>
+<Placemark><name>VP027 (s3)</name><Point><coordinates>110.587356,-7.083453,0</coordinates></Point></Placemark>
+<Placemark><name>VP028 (s3)</name><Point><coordinates>110.724056,-6.985228,0</coordinates></Point></Placemark>
+<Placemark><name>VP029 (s3)</name><Point><coordinates>110.711834,-7.012840,0</coordinates></Point></Placemark>
+<Placemark><name>VP030 (s3)</name><Point><coordinates>110.559745,-7.168098,0</coordinates></Point></Placemark>
+</Document></kml>
