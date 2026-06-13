@@ -140,3 +140,6 @@ data/sits_exports/temp_s1_processing/
 
 # run/processing logs (regenerable)
 output/**/*.log
+
+# MOGPR fused-curve cache (regenerable)
+output/**/fused.npz
