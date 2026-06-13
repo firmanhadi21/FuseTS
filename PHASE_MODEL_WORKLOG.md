@@ -305,7 +305,52 @@ one period: `--periods 13 --skip-download --preprocess-only` then `--convert-onl
 4. **Generate per-period maps** from cache → 13 Java growth-stage maps (×2 schemes), minutes.
 5. As later periods (14, 15, …) download → re-ingest + re-fuse (resume/cache makes it cheap).
 
-**Open decisions:** confirm SNAP/config setup for the p13 preprocess, and whether I run the
-SNAP step or the user does (it's the user's heavy Java-wide toolchain).
+## 12. p13 ingested · 2026 per-period maps (running) · Semarang field validation
 
-Last updated: 2026-06-13 (Java 2024 done; 2026 per-period-map plan, awaiting p13).
+### Achieved
+- **p13 ingested end-to-end** through the operational SNAP pipeline, now captured as the
+  reproducible runbook **`INGEST_NEW_PERIOD.md`**: download (12 scenes incl S1C) →
+  **SNAP-13** preprocess (`sen1_preprocessing-gpt-50m.xml`, S1C needs SNAP-13) → `gdal_merge`
+  mosaic → `stack_period_bands.py --add-period 13` → **`concat_multiyear_stack.py`** (preserves
+  `YYYY_Period_N` names) → **live `stacks/java_vh_2024_2026_50m.tif` = 74 bands** (2026 now has
+  13 periods incl `2026_Period_13`). Original backed up `.bak73`; per-year `java_vh_2026_50m.tif`
+  → 13 bands (`.bak12` saved).
+- **New scripts (committed):** `INGEST_NEW_PERIOD.md`, `concat_multiyear_stack.py`,
+  `map_phases_tiled.py` (validated: cache→maps ~3s/tile, emits 6-phase + 3-phase, one band/period),
+  `make_validation_points.py`.
+
+### In progress (running background jobs)
+- **2026 fuse:** `produce_annual_tiled.py --year 2026 → output/production/java_2026` (PID 1515774,
+  ~60/365 tiles at last check, ~3–4 h, caches `cube.nc`+`fused.npz`). Monitor `b6g01xbxj`
+  **auto-chains** → `map_phases_tiled --mosaic` → **`output/production/java_2026_phases/
+  java_phase6_p01..13.tif` + `java_phase3_p01..13.tif`** = the deliverable (per-period 6+3-phase
+  Java growth-stage maps).
+- **Validation-points monitor `bjhnhdt5u`:** waits for `java_phase6_p13.tif`, then runs
+  `make_validation_points.py` → `output/validation/semarang_veg_p13.{csv,geojson,kml}`.
+
+### Semarang field-validation design
+- **Goal:** field-validate the 2026 growth-stage maps near Semarang (user is on-site).
+- **TIME-LAG handling (key):** latest map = **p13 ≈ May 25–Jun 5**; survey is mid-late June+ →
+  rice advances ~1 phase over the ~3–5-week lag. So **target fields at flooding/early-veg
+  (phase 1–2) on p13** → they mature to **vegetation at visit**. (Do NOT pick fields already
+  vegetative on p13 — they'll be generative by then.) **p14/15 not yet available** (would allow
+  current-period targeting via the runbook).
+- **Points:** ~100 near Semarang, bbox `110.15,-7.20,110.75,-6.80`, ≥2 km apart, paddy-only,
+  phone-loadable `.kml/.geojson/.csv` with blank `observed_fase / transplant_date / notes`.
+  Preliminary set (committed, CI-stratified, logistics): `output/validation/semarang_prelim.*` (102 pts).
+- **Field protocol per point:** GPS + observed growth stage (1–6) + **transplant date (ask farmer)**
+  + photo.
+- **Validation metric:** confusion (observed vs predicted phase) **+** transplant-date phenology
+  check (BulakBakal-style, robust to the lag).
+
+### Next steps (resume here)
+1. When fuse+maps finish (`b6g01xbxj`): per-period maps in `output/production/java_2026_phases/`;
+   veg points auto-generated (`bjhnhdt5u`) → `output/validation/semarang_veg_p13.*`.
+2. **Field survey** (user): visit points, record stage + transplant date + photo.
+3. **Build a scorer** (observed vs predicted phase + phenology) once survey data returns.
+4. **Ingest p14/p15** when downloaded (via `INGEST_NEW_PERIOD.md`) for current-period targeting.
+5. **Push** the unpushed commits (2 ahead at last check: validation sampler + 102 points).
+6. Parked: Pekalongan fix, native-GEE V3 head-to-head, count-axis (Jatiluhur/Rentang drop_thr).
+
+Last updated: 2026-06-13 (p13 ingested → 74-band stack; 2026 fuse+maps running; Semarang
+validation points wired, lag-adjusted to phase 1–2 on p13).
