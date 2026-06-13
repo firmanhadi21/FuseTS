@@ -349,8 +349,17 @@ one period: `--periods 13 --skip-download --preprocess-only` then `--convert-onl
 2. **Field survey** (user): visit points, record stage + transplant date + photo.
 3. **Build a scorer** (observed vs predicted phase + phenology) once survey data returns.
 4. **Ingest p14/p15** when downloaded (via `INGEST_NEW_PERIOD.md`) for current-period targeting.
-5. **Push** the unpushed commits (2 ahead at last check: validation sampler + 102 points).
-6. Parked: Pekalongan fix, native-GEE V3 head-to-head, count-axis (Jatiluhur/Rentang drop_thr).
+5. Parked: Pekalongan fix, native-GEE V3 head-to-head, count-axis (Jatiluhur/Rentang drop_thr).
+
+### QUEUED: full 2025 annual run (after 2026)
+A detached chain (`output/production/chain_2025.log`) waits for the 2026 fuse+maps, then runs
+the **full-year 2025** annual run — same steps as 2024 (it's a full year → cropping-intensity +
+production total, not just per-period maps), **with caching** (automatic now):
+`produce_annual_tiled --year 2025 --out output/production/java_2025` → then
+`mosaic_ci_map --run-dir output/production/java_2025 --year 2025` → `java_cropping_intensity.png`
++ `java_n_harvests.tif` + `java_production_summary.json`. 2025 = 30 periods in the stack.
+**To check on resume:** `tail output/production/chain_2025.log`; results in `output/production/java_2025/`.
+(`mosaic_ci_map.py` also formalizes the 2024 national-map step.)
 
 Last updated: 2026-06-13 (p13 ingested → 74-band stack; 2026 fuse+maps running; Semarang
 validation points wired, lag-adjusted to phase 1–2 on p13).
