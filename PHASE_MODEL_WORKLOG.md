@@ -3,7 +3,7 @@
 Resume document for the phase-classification track. Companion to `WORKLOG.md` (which
 covers the separate cropping-intensity / `drop_thr` axis, now parked).
 
-Last updated: 2026-06-12 (HPC).
+Last updated: 2026-06-13 (HPC). Latest state in §12. Scripts inventory in §4.
 
 ---
 
@@ -50,19 +50,41 @@ Brebes/Tegal 546, Pekalongan **146 (only 5.4%)**, Semarang/Demak 214, Klambu 173
 
 ## 4. Pipeline scripts (`scripts/`)
 
-| script | role | status |
-|---|---|---|
-| `build_cube_from_snap_s1.py` | MOGPR cube from **SNAP VH (int16→dB, named-band select) + MPC NDVI** | committed `16f3880` |
-| `extract_point_features.py` | scalar MOGPR phenology features at points | committed |
-| `extract_point_series.py` | **full fused NDVI+VH curve** per point (now also saves coords) | committed (coords edit uncommitted) |
-| `train_phase_classifier.py` | scalar features + RandomForest | committed |
-| `train_rocket_classifier.py` | **MiniROCKET** on full curve + per-location norm | committed |
-| `train_ensemble.py` | VH-only vs OPT-only vs ensemble (proxy) | committed |
-| `validate_phase_vs_drone.py` | rule-based `[POS,EOS]` baseline | committed |
-| `run_v3_cnn.py` | runs the **actual idmai V3 VH-CNN** on 0104 (reuses their utils/scaler/encoder) | **UNCOMMITTED** |
-| `train_v3_mogpr_ensemble.py` | **V3 ⊕ MOGPR** faithful ensemble | **UNCOMMITTED, RUNNING** |
+All committed & pushed (`origin/main`). Grouped by role:
 
-All evaluation uses **leave-one-region-out CV** (spatial blocking — honest cross-region
+**Data / stack:**
+| script | role |
+|---|---|
+| `build_cube_from_snap_s1.py` | MOGPR cube from **SNAP VH (int16→dB, named-band select) + MPC NDVI** |
+| `concat_multiyear_stack.py` | concat per-year stacks → multi-year, preserving `YYYY_Period_N` names (ingestion step 4) |
+
+**Phase classifier — build & validate (leave-one-region-out):**
+| script | role |
+|---|---|
+| `extract_point_features.py` | scalar MOGPR phenology features at points |
+| `extract_point_series.py` | **full fused NDVI+VH curve** per point (+coords) |
+| `train_phase_classifier.py` | scalar features + RandomForest (59% F1) |
+| `train_rocket_classifier.py` | **MiniROCKET** on full curve + per-loc norm (65.5%) — the model used |
+| `validate_phase_vs_drone.py` | rule-based `[POS,EOS]` baseline (22%, the failed first pass) |
+| `run_v3_cnn.py` | runs the **actual idmai V3 VH-CNN** on 0104 (their utils/scaler/encoder) |
+| `train_ensemble.py` / `train_v3_mogpr_ensemble.py` | VH vs OPT vs ensemble; **V3 ⊕ MOGPR** faithful ensemble |
+| `weight_sweep_v3_mogpr.py` | blend-weight sweep (best w_v3≈0.5 → 71.5%) |
+
+**Production & maps (national, tiled, spawn-safe, cached):**
+| script | role |
+|---|---|
+| `produce_estimate.py` | snapshot: phase-4-5 area × yield at one date (1 AOI) |
+| `produce_annual.py` | single-AOI annual: episode count = harvests/yr × yield |
+| `produce_annual_tiled.py` | **national** annual run (Java); caches `cube.nc`+`fused.npz` |
+| `map_phases_tiled.py` | **per-period 6+3-phase growth-stage maps** from cached fused curves |
+| `mosaic_ci_map.py` | national cropping-intensity map (GeoTIFF+PNG) from a run-dir |
+| `make_validation_points.py` | stratified field-validation points (GeoJSON/CSV/KML) |
+
+**Count-axis (other track, parked):** `scale_runner.py`, `sweep_drop_thr.py`,
+`cross_validate_cropping_intensity.py`.
+**Ingestion runbook:** `INGEST_NEW_PERIOD.md` (download→SNAP-13→mosaic→add-period→concat→swap).
+
+All phase-model evaluation uses **leave-one-region-out CV** (spatial blocking — honest cross-region
 transfer; random splits leak via spatial autocorrelation).
 
 ## 5. Results so far (phase-4-5 = generative; F1, leave-one-region-out unless noted)
