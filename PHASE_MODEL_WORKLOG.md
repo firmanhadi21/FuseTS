@@ -239,3 +239,73 @@ but may **miss some real paddy** → the production figure **errs LOW**, the saf
 → Report the national figure as *"annual production over **detected active paddy** (~2.3 M
 ha)"*. **LBS stays as a cross-check** to reconcile with official BPS area statistics if needed
 (`LBS_Jawa_50m.*` in `idmai/DL/vh/model_6fase_enhanced_backward/`).
+
+## 10. National production run — Java 2024 — DONE
+
+Ran the full pipeline over all of Java with `scripts/produce_annual_tiled.py`
+(degree-tiled, **local-UTM per tile**, paddy-skip, **`spawn`-safe** Pool, **resumable**,
+**caching**). 365 paddy tiles, ~11 h, 0 errors.
+
+**Result (2024, detected-paddy denominator):**
+| | |
+|---|---|
+| Physical paddy | **2,278,550 ha** |
+| Annual harvest area | **4,219,032 ha** |
+| Mean cropping intensity | **1.85** harvests/yr |
+| **Annual production** | **~24.47 Mt** @ 5.8 t/ha |
+
+CI 1.85 matches every smaller scale (Brebes 1.86, Jatiluhur 2.19, Rentang 2.38 →
+island mean 1.85) — strong internal consistency. ~24.5 Mt is **low vs BPS ~30+ Mt** (as
+expected: detected mask < LBS, flat yield, ~68% model, Pekalongan-type weakness) — a
+**method demonstration, not an official statistic**.
+
+Outputs: `output/production/java/java_cropping_intensity.png` (national map),
+`java_n_harvests.tif` (mosaic), `java_production_summary.json`, per-tile `n_harvests.tif`.
+Committed `e88f924`.
+
+**Production-loop scripts (all committed):**
+- `produce_estimate.py` — snapshot (phase-4-5 area at one date × yield) on one AOI cube.
+- `produce_annual.py` — single-AOI annual (classify all periods, count harvest episodes).
+- `produce_annual_tiled.py` — **national** tiled version (the Java run).
+- `weight_sweep_v3_mogpr.py` — V3⊕MOGPR blend weight sweep.
+
+**Caching (commit `3c79e3d`):** each tile caches `cube.nc` (S2+VH, no re-download) +
+`fused.npz` (fused curves, no re-fuse). Validated **122.5 s cold → 1.1 s warm** (110×). So
+after a year's one-time ~11 h fuse, all re-analysis (per-period maps, 6-phase, thresholds)
+is **minutes**. `fused.npz` git-ignored.
+
+## 11. Forward plan — per-period growth-stage maps + 2026 (p13 ingestion)
+
+**Goal:** per-period (12-day) **growth-stage maps** of Java — the operational KSA-style
+product (vs the annual cropping-intensity map). Output **both 6-phase** (flooding / early-veg
+/ late-veg / early-gen / late-gen / harvest — train a 6-class head) **and 3-phase** (collapse:
+bare/veg/generative, the robust ~70% view). 6-class ~51%, 3-class ~70% — fine splits (2↔3,
+4↔5) are the weak part; flag as lower-confidence.
+
+**2026 status:** VH stack `java_vh_2024_2026_50m.tif` has **12 periods** (`2026_Period_1..12`,
+≈ Jan–late May). User is **adding period 13** (downloading raw S1). The 12-period partial fuse
+was launched then **stopped + cleared** (superseded — adding p13 means re-fusing the series).
+Note: **annual cropping intensity is NOT meaningful for a partial year** (~half), so the 2026
+deliverable is the **per-period growth-stage maps**, not a production total. Latest period is
+**provisional** (MOGPR edge effect).
+
+**p13 ingestion = user's SNAP pipeline** (`rice-growth-stage-mapping/s1_period_pipeline.py`:
+download → SNAP preprocess → convert int16 dB×100 → mosaic → stack into the multi-band
+GeoTIFF). Config: `rice-growth-stage-mapping/pipeline_config_java_both_orbits.yaml`. SNAP is
+at `idmai/esa-snap-13/bin/gpt` (⚠️ `gpt` **not on PATH** — set `snap_gpt_path`). Stages for
+one period: `--periods 13 --skip-download --preprocess-only` then `--convert-only`,
+`--mosaic-only`, `--stack-only` (rebuilds the stack → 13 `2026_Period_*` bands).
+
+**Steps to go (in order):**
+1. **Preprocess p13** (SNAP, user's pipeline) → VH stack updated to 13 periods.
+2. **Build `map_phases_tiled.py`** — reads cached `fused.npz`/`cube.nc` → classify each period
+   (6-class + 3-collapse) → per-tile multi-band phase maps → mosaic per period → Java
+   per-period growth-stage maps (6-phase + 3-phase). `spawn`-safe. (Not built yet.)
+3. **Fuse 2026 (13 periods)** with `produce_annual_tiled --year 2026` (populates cache).
+4. **Generate per-period maps** from cache → 13 Java growth-stage maps (×2 schemes), minutes.
+5. As later periods (14, 15, …) download → re-ingest + re-fuse (resume/cache makes it cheap).
+
+**Open decisions:** confirm SNAP/config setup for the p13 preprocess, and whether I run the
+SNAP step or the user does (it's the user's heavy Java-wide toolchain).
+
+Last updated: 2026-06-13 (Java 2024 done; 2026 per-period-map plan, awaiting p13).
