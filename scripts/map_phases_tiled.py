@@ -51,8 +51,12 @@ def _init(mr, clf):
     _MR, _CLF = mr, clf
 
 
-def _tile_crs(tid):
-    c = int(tid.split("_c")[1]); lon = 103.53 + c * 0.2
+def _tile_crs(tid, tile_deg=0.2, mask_west=103.53):
+    # UTM zone by tile CENTER (must match produce_annual_tiled.paddy_tiles, which uses
+    # (bbox_w+bbox_e)/2). Using the west edge mis-assigns the column straddling 108°E
+    # (c022 ≈ NW Indramayu/Patrol) → wrong CRS → gap when mosaicked.
+    c = int(tid.split("_c")[1])
+    lon = mask_west + c * tile_deg + tile_deg / 2.0
     return f"EPSG:{32748 if lon < 108 else 32749}"
 
 
