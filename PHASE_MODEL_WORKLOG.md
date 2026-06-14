@@ -385,3 +385,57 @@ production total, not just per-period maps), **with caching** (automatic now):
 
 Last updated: 2026-06-13 (p13 ingested → 74-band stack; 2026 fuse+maps running; Semarang
 validation points wired, lag-adjusted to phase 1–2 on p13).
+
+## 13. 2024+2025 national runs · grid/render fixes · paper comparison · multi-season retrain (2026-06-14)
+
+**Patrol/Indramayu gap FIXED** (`891c56d`): `map_phases_tiled._tile_crs` picked UTM zone from
+tile WEST edge, but `produce_annual_tiled` uses tile CENTER → only the column straddling 108°E
+(c022) was stamped 48S while data was fused 49S → rectangular hole. Fixed to center-based.
+
+**CI map cleanups:**
+- Clamp IP to 1–3 (`ccb437b`): generative-episode counter over-counts ~1% to ≥4; rice ≤3/yr.
+  `mosaic_ci_map.py` now writes `java_cropping_intensity.tif` (clamped) + `java_n_harvests.tif` (raw 1–7).
+- PNG render fixed twice: max-pool inflated CI=3 → switched to **majority-class (mode)** downsample
+  (`65f59b5`); a plain imshow had also subsampled away thin paddy strips.
+- **Grid alignment** (`b327b36`): mosaics auto-picked ~0.0004526°/50.39 m; now `reproject_match`
+  to the source mask → **true 50 m (0.000449158°), pixel-aligned**. Area/production unchanged
+  (computed per-tile in native UTM). Applies to `mosaic_ci_map.py` + `map_phases_tiled.py`.
+
+**2025 full annual run DONE** (cache saved per request): 2,278,533 ha, **IP 1.94, 25.59 Mt**.
+**2024 re-run** via current cached pipeline (`output/production/java_2024/`): **IP 1.85, 24.47 Mt**
+== original → pipeline consistent. **2024-vs-2025 verdict: +0.10 IP is REAL** (rerun matches; raw
+≥4 tail equal; 2025 has FEWER periods (30) yet higher; **S2 NDVI valid 2025 61.3% < 2024 64.9%**
+yet higher → not data-coverage). Wet-year (post-El-Niño) signal. Triple-crop concentrates in
+**Bengawan Solo** corridor (47% of Java CI=3 in 2024). Both years cached & comparable.
+
+**Per-period growth-stage maps** for **2024 (31p), 2025 (30p), 2026 (13p)** — 6+3 phase, 50 m,
+mask-aligned: `output/production/java_{2024,2025,2026}_phases/`.
+
+**CI consensus (2024/2025) GeoTIFFs** in `output/production/`: `java_ci_consensus_2024_2025.tif`
+(rounded 2-yr mean, IP 1.98), `java_ci_mean_…` (float), `java_ci_min_…` (floor). NOTE pixel-level
+agreement only **47%** → user chose **combined-time-series CI** (re-fuse 61 periods, count/2) as
+the rigorous single map — NOT yet built (needs a multi-year tweak to produce_annual_tiled).
+
+**Follow-up report** (in landcover repo, pushed): `…/2026/laporan/LAPORAN_LANJUTAN_MOGPR_S1S2_2026.{md,tex,pdf}`
+— tindak-lanjut to L1–L3+Kegiatan; BAB 4 = per-report impact; renders via their pandoc+xelatex pipeline.
+
+**Paper comparison** (`rice-growth-stage-mapping/paper_latex/manuscript.tex` = S1-only DL, CNN
+87.34% OA/4-class/in-distribution CV): NOT directly comparable to ours (S1+S2, 6/3-class,
+generative-F1, leave-one-region-out). Agree on SNAP>GEE, VH, 12-day, scale. Paper maps 3.48 M ha
+(≈LBS de jure) vs our 2.28 M detected. **Key cross-insight: paper's single-season collapse (21.89%)
+warns our model** — trained Mar–Jun only.
+
+**Multi-season retrain IN PROGRESS** (the seasonal-bias fix): exposure check found our 0104.csv =
+**0% dry-season**; **35.5%** of 2024 generative pixels fall in dry-season periods; dry-gen wave
+muted (~21% vs ~33% wet). Fix uses idmai's own **`6fase.csv` dry subset (Jul–Sep, 34,143 pts,
+51% generative, native 6-class)** — NO paper data needed. Built `data/aois/points_dry6fase.csv`.
+Detached chain `/tmp/multiseason.sh` (log `output/production/multiseason.log`): extract fused
+series → merge w/ series_0104 → `series_multiseason` → retrain + re-map 2024 → `java_2024_phases_ms/`
++ exposure comparison. **On resume:** `tail output/production/multiseason.log`; if dry-gen RISES →
+muting was bias (re-map 2025/2026 + update IP); if STAYS ~21% → real (original numbers stand).
+
+**Unpushed (FuseTS):** none outstanding for the grid/CI/CRS commits (all pushed thru `b327b36`).
+Multi-season scripts/outputs not yet committed (run in progress).
+
+Last updated: 2026-06-14 (2024+2025 national runs done & comparable; grid/render/CRS fixed;
+follow-up report written+pushed; multi-season retrain running to resolve dry-season bias).
