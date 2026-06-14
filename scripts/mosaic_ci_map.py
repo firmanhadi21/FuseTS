@@ -16,12 +16,15 @@ warnings.filterwarnings("ignore")
 import numpy as np
 import rioxarray  # noqa: F401
 from rioxarray.merge import merge_arrays
+from rasterio.enums import Resampling
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap, BoundaryNorm
 
 PIX_HA = 0.25
+DEFAULT_MASK = ("/home/unika_sianturi/work/landcover/s1-land-cover-classification/"
+                "cropping_intensity_consensus_mt2024_25/paddy_mask.tif")
 
 
 def main(argv=None):
@@ -29,6 +32,8 @@ def main(argv=None):
     p.add_argument("--run-dir", required=True)
     p.add_argument("--year", type=int, required=True)
     p.add_argument("--yield", dest="yld", type=float, default=5.8)
+    p.add_argument("--mask", default=DEFAULT_MASK,
+                   help="snap output grid to this raster (true 50 m, pixel-aligned with the source mask)")
     a = p.parse_args(argv)
     rd = Path(a.run_dir)
 
@@ -41,6 +46,12 @@ def main(argv=None):
         except Exception:
             pass
     mos = merge_arrays(arrs, nodata=0)
+    # Snap to the source mask grid: per-tile UTM->4326 reproject lands on a ~50.39 m auto grid;
+    # reproject_match to the mask gives TRUE 50 m (0.000449158 deg) and pixel alignment with the
+    # mask. nearest = categorical-safe (n_harvests are integer episode counts).
+    mask = rioxarray.open_rasterio(a.mask)
+    mclip = mask.rio.clip_box(*mos.rio.bounds())
+    mos = mos.rio.reproject_match(mclip, resampling=Resampling.nearest)
     mos.rio.to_raster(rd / "java_n_harvests.tif", compress="lzw")  # raw episode count (1-7)
 
     # Cropping intensity is physically 1-3 (IP100/200/300). The generative-episode counter

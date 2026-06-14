@@ -92,8 +92,9 @@ def map_tile(tdir, cfg):
     return tdir.name, f"ok L={L} px={int(ok.sum())}"
 
 
-def mosaic_period(run_dir, scheme, period, out, crs="EPSG:4326"):
+def mosaic_period(run_dir, scheme, period, out, mask=None, crs="EPSG:4326"):
     from rioxarray.merge import merge_arrays
+    from rasterio.enums import Resampling
     tifs = sorted(glob.glob(f"{run_dir}/tiles/*/{scheme}.tif"))
     arrs = []
     for t in tifs:
@@ -104,6 +105,10 @@ def mosaic_period(run_dir, scheme, period, out, crs="EPSG:4326"):
     if not arrs:
         return None
     mos = merge_arrays(arrs, nodata=0)
+    if mask is not None:
+        # snap to the source mask grid: true 50 m, pixel-aligned (nearest = categorical-safe)
+        mclip = mask.rio.clip_box(*mos.rio.bounds())
+        mos = mos.rio.reproject_match(mclip, resampling=Resampling.nearest)
     p = Path(out) / f"java_{scheme}_p{period:02d}.tif"
     mos.rio.to_raster(p, compress="lzw")
     return p
@@ -117,6 +122,9 @@ def main(argv=None):
     p.add_argument("--workers", type=int, default=16)
     p.add_argument("--out", required=True)
     p.add_argument("--mosaic", action="store_true", help="also mosaic per-period Java maps")
+    p.add_argument("--mask", default="/home/unika_sianturi/work/landcover/s1-land-cover-classification/"
+                   "cropping_intensity_consensus_mt2024_25/paddy_mask.tif",
+                   help="snap mosaic grid to this raster (true 50 m, pixel-aligned)")
     a = p.parse_args(argv)
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
 
@@ -145,10 +153,11 @@ def main(argv=None):
             log(f"[{i}/{len(tdirs)}] {tid}: {status}")
 
     if a.mosaic and nL:
-        log(f"mosaicking {nL} periods x 2 schemes -> Java maps")
+        log(f"mosaicking {nL} periods x 2 schemes -> Java maps (snapped to mask grid, true 50 m)")
+        mask = rioxarray.open_rasterio(a.mask)
         for scheme in ("phase6", "phase3"):
             for per in range(1, nL + 1):
-                mp = mosaic_period(a.run_dir, scheme, per, out)
+                mp = mosaic_period(a.run_dir, scheme, per, out, mask=mask)
                 log(f"  {scheme} p{per:02d}: {'ok' if mp else 'empty'}")
     log(f"done -> {out} (per-tile phase6/phase3.tif; --mosaic for Java maps)")
 
