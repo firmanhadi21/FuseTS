@@ -48,15 +48,18 @@ def main(argv=None):
     ci = mos.where(mos < 4, 3).rio.write_crs(mos.rio.crs)
     ci.rio.to_raster(rd / "java_cropping_intensity.tif", compress="lzw")
 
-    # PNG: block max-pool (skipna) so thin paddy strips survive downsampling to display res
-    # (a plain imshow of the full-res raster subsamples and drops most strips).
+    # PNG: majority-class (mode) downsample so thin paddy strips survive display-res
+    # subsampling WITHOUT the upward bias of max-pooling (max paints a whole block with its
+    # single highest CI, inflating CI=3). Mode = the dominant class per block = faithful.
     cm = rioxarray.open_rasterio(rd / "java_cropping_intensity.tif", masked=True).isel(band=0)
-    da = cm.coarsen(x=10, y=10, boundary="pad").max()
+    f = 10
+    cnt = np.stack([(cm == k).coarsen(x=f, y=f, boundary="pad").sum().values for k in (1, 2, 3)])
+    da_vals = np.where(cnt.sum(0) > 0, cnt.argmax(0) + 1, np.nan)
     ext = [float(cm.x.min()), float(cm.x.max()), float(cm.y.min()), float(cm.y.max())]
     cmap = ListedColormap(["#fee08b", "#66bd63", "#1a9850"])  # 1,2,3
     norm = BoundaryNorm([.5, 1.5, 2.5, 3.5], cmap.N)
     fig, ax = plt.subplots(figsize=(16, 6)); ax.set_facecolor("#f5f5f5")
-    im = ax.imshow(np.ma.masked_invalid(da.values), cmap=cmap, norm=norm, extent=ext, interpolation="nearest")
+    im = ax.imshow(np.ma.masked_invalid(da_vals), cmap=cmap, norm=norm, extent=ext, interpolation="nearest")
     cb = fig.colorbar(im, ax=ax, ticks=[1, 2, 3], shrink=0.7)
     cb.ax.set_yticklabels(["1 (IP100)", "2 (IP200)", "3 (IP300)"]); cb.set_label("harvests / yr (cropping intensity)")
     ax.set_title(f"Java rice cropping intensity {a.year} (MOGPR S1+S2 phase model, clamped 1-3, detected paddy)")
