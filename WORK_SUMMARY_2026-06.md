@@ -3,6 +3,38 @@
 Consolidated record of the S1+S2 MOGPR phase-model work. The live resume doc is
 `PHASE_MODEL_WORKLOG.md` (§13–14); this file is the readable hand-over summary.
 
+## Conclusion
+
+**MOGPR S1+S2 fusion materially improves rice growth-stage mapping over S1-only, and turns it
+into a working cropping-intensity and production product for Java.** The Sentinel-2 optical
+(NDVI) channel is the dominant signal for phase; SAR alone cannot carry it.
+
+What the evidence shows:
+1. **Fusion beats SAR-only for phase.** Generative-phase F1: VH-only 52% → +MOGPR **67–68%**;
+   3-class ~70%. Beats the idmai VH-CNN (64%) and is the validated phase model the landcover
+   reports lacked (their S1-only phase = 32% vs field data).
+2. **Multi-season training is non-negotiable.** A wet-only model collapses on the dry season
+   (held-out 36.9%); dry-season labels fix it (78.6%) with no wet penalty — independently
+   reproducing the S1-only paper's central finding, on the fused signal.
+3. **Production (method demonstration):** 2024 **28.8 Mt**, 2025 **29.4 Mt**, combined
+   **~29.5 Mt/yr** at IP ~2.2; harvest ~5.0 M ha ≈ BPS luas panen (~5.34 M) — external sanity check.
+4. **Real interannual signal:** 2025 > 2024 (wetter, post-El-Niño), concentrated where water is
+   the limiter — the Bengawan Solo basin holds ~half of Java's triple-cropping.
+
+Honest limits:
+- **Method-demonstration numbers, not official:** detected-mask denominator, flat 5.8 t/ha, and
+  the phase model is validated on a **random (not spatial) split** with same-campaign labels →
+  absolute accuracy is somewhat optimistic.
+- 6-class is weak (~51%); the robust products are **3-class** and the **generative** class.
+- **The decisive next step is independent multi-DI field validation (TA 2027)** — the only thing
+  that converts "promising demonstration" into "operationally trustworthy." This is the open
+  thread waiting on the Semarang field survey.
+
+For the TA-2026 reports: the S1 binary-paddy results stand; this work *adds* a validated
+phase→IP→production capability — realizing the S1+S2 fusion the program had parked as long-term,
+ahead of schedule. It belongs in the next reporting cycle / TA-2027 proposal, not retrofitted into
+L1–L3.
+
 ## 1. Goal
 Map rice **growth stage (phase)** and derive **cropping intensity (IP)** and **production**
 for Java, using **MOGPR S1+S2 fusion as a feature-generator** feeding a trained classifier
