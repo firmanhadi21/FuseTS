@@ -1,0 +1,319 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  ignorenonframetext,
+  aspectratio=169,
+]{beamer}
+\newif\ifbibliography
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% remove section numbering
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{section title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{subsection title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\usetheme[]{Madrid}
+\usefonttheme{serif} % use mainfont rather than sansfont for slide text
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\ifPDFTeX\else
+  % xetex/luatex font selection
+    \setmainfont[]{Latin Modern Roman}
+    \setsansfont[]{Latin Modern Sans}
+    \setmonofont[]{Latin Modern Mono}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+\usepackage{caption}
+% Make caption package work with longtable
+\makeatletter
+\def\fnum@table{\tablename~\thetable}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Rice Growth-Stage, Cropping Intensity \& Production from S1+S2 Fusion},
+  pdfauthor={Dr.~Firman Hadi},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Rice Growth-Stage, Cropping Intensity \& Production from S1+S2
+Fusion}
+\subtitle{MOGPR Sentinel-1 + Sentinel-2 --- Conclusions (Java,
+2024-2026)}
+\author{Dr.~Firman Hadi}
+\date{June 2026}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{The question}
+\phantomsection\label{the-question}
+\textbf{Can we map rice growth stage --- and from it cropping intensity
+and production --- better than with Sentinel-1 alone?}
+
+\begin{itemize}
+\tightlist
+\item
+  The TA-2026 reports built a strong \textbf{S1-only} paddy map (95\%
+  CV, \textasciitilde3.0 M ha).
+\item
+  But their \textbf{growth-stage} model was \emph{not validated} (32\%
+  vs field data) and they parked \textbf{S1 + S2 fusion} as long-term
+  future work.
+\item
+  This work builds and validates that fusion.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Approach}
+\phantomsection\label{approach}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{MOGPR} fuses Sentinel-1 VH (SAR, all-weather) + Sentinel-2
+  NDVI (optical) into one gap-filled curve per pixel.
+\item
+  MOGPR is a \textbf{feature generator}, not the final model.
+\item
+  A trained \textbf{MiniROCKET + LightGBM} classifier reads the fused
+  curve -\textgreater{} 6 / 3 growth phases.
+\item
+  Production = area in generative phase (4+5) x 5.8 t/ha, per 12-day
+  period, Java-wide, 50 m.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Finding 1 --- Fusion beats SAR-only for phase}
+\phantomsection\label{finding-1-fusion-beats-sar-only-for-phase}
+Generative-phase F1 (leave-one-region-out):
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Method & F1 \\
+\midrule\noalign{}
+\endhead
+Rule-based on SAR curve & \textasciitilde22\% \\
+\textbf{VH-only} & \textbf{52\%} \\
+\textbf{VH + MOGPR optical} & \textbf{67-68\%} \\
+idmai VH-CNN (in-sample) & 64\% \\
+\bottomrule\noalign{}
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Optical is the dominant signal} for phase; SAR alone cannot
+  carry it.
+\item
+  This is the validated phase model the reports lacked.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Finding 2 --- Multi-season training is non-negotiable}
+\phantomsection\label{finding-2-multi-season-training-is-non-negotiable}
+A model trained only on the wet season \textbf{collapses} on the dry
+season:
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Training & Dry-season accuracy & Dry-season generative F1 \\
+\midrule\noalign{}
+\endhead
+Wet-only & 36.9\% & 60.7\% \\
+\textbf{Wet + dry (multi-season)} & \textbf{78.6\%} & \textbf{91.6\%} \\
+\bottomrule\noalign{}
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  Fixed using existing dry-season field labels (no new data needed).
+\item
+  Independently reproduces the S1-only literature's central finding ---
+  on the fused signal.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Finding 3 --- Production (method demonstration)}
+\phantomsection\label{finding-3-production-method-demonstration}
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Year & Cropping intensity & Production \\
+\midrule\noalign{}
+\endhead
+2024 & 2.18 & \textbf{28.8 Mt} \\
+2025 & 2.22 & \textbf{29.4 Mt} \\
+2024-2025 combined & 2.22 & \textbf{\textasciitilde29.5 Mt/yr} \\
+\bottomrule\noalign{}
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  Harvest area \textasciitilde5.0 M ha \textbf{= close to BPS luas panen
+  (\textasciitilde5.34 M)} --- an independent sanity check.
+\item
+  Detected-paddy denominator (2.28 M ha), flat 5.8 t/ha.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Finding 4 --- A real interannual signal}
+\phantomsection\label{finding-4-a-real-interannual-signal}
+\begin{figure}
+\centering
+\includegraphics[width=0.85\linewidth,height=\textheight,keepaspectratio]{output/production/ci3_highlight_2024_2025.png}
+\caption{Triple-cropping (IP=3) concentrates in the Bengawan Solo
+corridor}
+\end{figure}
+
+\begin{itemize}
+\tightlist
+\item
+  2025 \textgreater{} 2024 (wetter, post-El-Nino) --- confirmed real,
+  not artefact.
+\item
+  \textasciitilde Half of Java's triple-cropping sits in the
+  \textbf{Bengawan Solo} basin (water-secure year-round).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Java cropping intensity --- combined 2024-2025}
+\phantomsection\label{java-cropping-intensity-combined-2024-2025}
+\begin{figure}
+\centering
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{output/production/java_combined_2024_2025/java_cropping_intensity_combined.png}
+\caption{Annual cropping intensity, 24-month combined count}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Honest limits}
+\phantomsection\label{honest-limits}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Method demonstration, not official numbers:} detected-mask
+  denominator + flat yield.
+\item
+  Accuracy is \textbf{optimistic} --- validated on a random (not
+  spatial) split, same-campaign labels.
+\item
+  6-class is weak (\textasciitilde51\%); robust products are
+  \textbf{3-class} and the \textbf{generative} class.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusion}
+\phantomsection\label{conclusion}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{S1 + S2 MOGPR fusion materially improves rice growth-stage
+  mapping over S1-only}, and turns it into a working
+  \textbf{cropping-intensity and production} product for Java.
+\item
+  It delivers --- ahead of schedule --- the fusion the program had
+  parked as future work.
+\item
+  The S1 binary-paddy results stand; this \textbf{adds} a validated
+  phase -\textgreater{} IP -\textgreater{} production capability.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Next step --- the decisive one}
+\phantomsection\label{next-step-the-decisive-one}
+\textbf{TA-2027 multi-DI field validation} (Klambu, Rentang, Jatiluhur,
+Semarang, E. Java, rainfed):
+
+\begin{itemize}
+\tightlist
+\item
+  Spatial leave-one-DI-out test (not random) + a dry-season campaign.
+\item
+  Validate IP against tracked actual harvests; production vs KSA/BPS.
+\item
+  Converts ``promising demonstration'' -\textgreater{} ``operationally
+  trustworthy.''
+\item
+  \textbf{Pilot already prepared:} 100 lag-adjusted Semarang points
+  awaiting survey.
+\end{itemize}
+\end{frame}
+
+\end{document}
