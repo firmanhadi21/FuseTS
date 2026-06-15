@@ -1,0 +1,2045 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.5875481580427,
+     -7.120413460123787
+    ]
+   },
+   "properties": {
+    "id": "VP001",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.73981259870096,
+     -6.90796189542952
+    ]
+   },
+   "properties": {
+    "id": "VP002",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.19498437888247,
+     -6.955123447845795
+    ]
+   },
+   "properties": {
+    "id": "VP003",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.66390495719286,
+     -7.085828321685185
+    ]
+   },
+   "properties": {
+    "id": "VP004",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.55700543838263,
+     -7.07774348412811
+    ]
+   },
+   "properties": {
+    "id": "VP005",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.16848407800094,
+     -6.920538309407194
+    ]
+   },
+   "properties": {
+    "id": "VP006",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.18914532953569,
+     -6.929521462248388
+    ]
+   },
+   "properties": {
+    "id": "VP007",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.48693684622131,
+     -7.1837446876542135
+    ]
+   },
+   "properties": {
+    "id": "VP008",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.60416699079892,
+     -7.178803953591556
+    ]
+   },
+   "properties": {
+    "id": "VP009",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.62617571525985,
+     -7.098853893304918
+    ]
+   },
+   "properties": {
+    "id": "VP010",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.17881470376832,
+     -6.971293122959946
+    ]
+   },
+   "properties": {
+    "id": "VP011",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.56464111829766,
+     -7.121311775407906
+    ]
+   },
+   "properties": {
+    "id": "VP012",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.50759809775606,
+     -7.07774348412811
+    ]
+   },
+   "properties": {
+    "id": "VP013",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.53140345278523,
+     -7.186888791148632
+    ]
+   },
+   "properties": {
+    "id": "VP014",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.16533997450652,
+     -6.997793423841472
+    ]
+   },
+   "properties": {
+    "id": "VP015",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.41821572698618,
+     -7.184193845296273
+    ]
+   },
+   "properties": {
+    "id": "VP016",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.22058636447987,
+     -6.930419777532508
+    ]
+   },
+   "properties": {
+    "id": "VP017",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.54892060082557,
+     -7.170269958392421
+    ]
+   },
+   "properties": {
+    "id": "VP018",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.59473468031565,
+     -7.090769055747843
+    ]
+   },
+   "properties": {
+    "id": "VP019",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.6544726467096,
+     -6.868436022928261
+    ]
+   },
+   "properties": {
+    "id": "VP020",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.60506530608303,
+     -7.057082232593361
+    ]
+   },
+   "properties": {
+    "id": "VP021",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.48244526980072,
+     -7.137032292879998
+    ]
+   },
+   "properties": {
+    "id": "VP022",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.52646271872257,
+     -7.018454675376221
+    ]
+   },
+   "properties": {
+    "id": "VP023",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.68950694279027,
+     -7.090319898105783
+    ]
+   },
+   "properties": {
+    "id": "VP024",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.32119767630127,
+     -7.079540114696348
+    ]
+   },
+   "properties": {
+    "id": "VP025",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.69669346506322,
+     -7.1428713422267744
+    ]
+   },
+   "properties": {
+    "id": "VP026",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.68007463230701,
+     -6.912453471850117
+    ]
+   },
+   "properties": {
+    "id": "VP027",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.62617571525985,
+     -7.073701065349572
+    ]
+   },
+   "properties": {
+    "id": "VP028",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.19992511294512,
+     -7.144218815152954
+    ]
+   },
+   "properties": {
+    "id": "VP029",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.23406109374167,
+     -7.02070046358652
+    ]
+   },
+   "properties": {
+    "id": "VP030",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.64773528207871,
+     -7.05798054787748
+    ]
+   },
+   "properties": {
+    "id": "VP031",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.5340983986376,
+     -7.075946853559871
+    ]
+   },
+   "properties": {
+    "id": "VP032",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.19318774831423,
+     -6.998242581483532
+    ]
+   },
+   "properties": {
+    "id": "VP033",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.23855267016226,
+     -6.946589452646659
+    ]
+   },
+   "properties": {
+    "id": "VP034",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.22058636447987,
+     -6.965903231255229
+    ]
+   },
+   "properties": {
+    "id": "VP035",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.57991247812768,
+     -6.872478441706798
+    ]
+   },
+   "properties": {
+    "id": "VP036",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.53140345278523,
+     -7.13298987410146
+    ]
+   },
+   "properties": {
+    "id": "VP037",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.69040525807439,
+     -7.175210692455078
+    ]
+   },
+   "properties": {
+    "id": "VP038",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.18600122604127,
+     -6.909758525997759
+    ]
+   },
+   "properties": {
+    "id": "VP039",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.54263239383673,
+     -6.912004314208058
+    ]
+   },
+   "properties": {
+    "id": "VP040",
+    "pred_stratum": 1,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.58485321219034,
+     -6.9533268172775555
+    ]
+   },
+   "properties": {
+    "id": "VP041",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.54936975846762,
+     -6.985217009863799
+    ]
+   },
+   "properties": {
+    "id": "VP042",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.6010228873045,
+     -6.861249500655305
+    ]
+   },
+   "properties": {
+    "id": "VP043",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.65402348906754,
+     -7.054387286741002
+    ]
+   },
+   "properties": {
+    "id": "VP044",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.68815946986409,
+     -7.047649922110105
+    ]
+   },
+   "properties": {
+    "id": "VP045",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.60281951787273,
+     -7.062921281940137
+    ]
+   },
+   "properties": {
+    "id": "VP046",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.64144707508987,
+     -6.81363879059697
+    ]
+   },
+   "properties": {
+    "id": "VP047",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.71016819432502,
+     -6.8181303670175675
+    ]
+   },
+   "properties": {
+    "id": "VP048",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.72049882009239,
+     -7.0099206801770855
+    ]
+   },
+   "properties": {
+    "id": "VP049",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.7047783026203,
+     -7.162634278477404
+    ]
+   },
+   "properties": {
+    "id": "VP050",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.73487186463831,
+     -7.090319898105783
+    ]
+   },
+   "properties": {
+    "id": "VP051",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.63381139517486,
+     -7.084930006401066
+    ]
+   },
+   "properties": {
+    "id": "VP052",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.5686835370762,
+     -6.903919476650982
+    ]
+   },
+   "properties": {
+    "id": "VP053",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.74879575154216,
+     -6.974437226454365
+    ]
+   },
+   "properties": {
+    "id": "VP054",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.53769165977407,
+     -6.936707984521345
+    ]
+   },
+   "properties": {
+    "id": "VP055",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.7002867261997,
+     -6.999140896767651
+    ]
+   },
+   "properties": {
+    "id": "VP056",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.60596362136715,
+     -7.016658044807982
+    ]
+   },
+   "properties": {
+    "id": "VP057",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.53634418684788,
+     -7.09615894745256
+    ]
+   },
+   "properties": {
+    "id": "VP058",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.68501536636967,
+     -6.854512136024408
+    ]
+   },
+   "properties": {
+    "id": "VP059",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.70837156375677,
+     -7.057082232593361
+    ]
+   },
+   "properties": {
+    "id": "VP060",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.56374280301354,
+     -6.969945650033766
+    ]
+   },
+   "properties": {
+    "id": "VP061",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.71690555895592,
+     -7.102447154441396
+    ]
+   },
+   "properties": {
+    "id": "VP062",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.51433546238695,
+     -6.943894506794301
+    ]
+   },
+   "properties": {
+    "id": "VP063",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.68007463230701,
+     -7.119964302481727
+    ]
+   },
+   "properties": {
+    "id": "VP064",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.67693052881259,
+     -6.947487767930779
+    ]
+   },
+   "properties": {
+    "id": "VP065",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.59742962616802,
+     -6.90661442250334
+    ]
+   },
+   "properties": {
+    "id": "VP066",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.19767932473484,
+     -6.902122846082743
+    ]
+   },
+   "properties": {
+    "id": "VP067",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.17028070856918,
+     -7.029683616427715
+    ]
+   },
+   "properties": {
+    "id": "VP068",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.59877709909419,
+     -6.8387916185523165
+    ]
+   },
+   "properties": {
+    "id": "VP069",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.57676837463326,
+     -6.985666167505858
+    ]
+   },
+   "properties": {
+    "id": "VP070",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.56598859122383,
+     -7.048099079752165
+    ]
+   },
+   "properties": {
+    "id": "VP071",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.72454123887093,
+     -6.871130968780619
+    ]
+   },
+   "properties": {
+    "id": "VP072",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.57766668991738,
+     -6.881012436905934
+    ]
+   },
+   "properties": {
+    "id": "VP073",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.72948197293358,
+     -7.030132774069775
+    ]
+   },
+   "properties": {
+    "id": "VP074",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.64773528207871,
+     -6.937157142163405
+    ]
+   },
+   "properties": {
+    "id": "VP075",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.5830565816221,
+     -7.0099206801770855
+    ]
+   },
+   "properties": {
+    "id": "VP076",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.74789743625803,
+     -7.041361715121269
+    ]
+   },
+   "properties": {
+    "id": "VP077",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.62258245412336,
+     -6.8769700181273965
+    ]
+   },
+   "properties": {
+    "id": "VP078",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.60776025193539,
+     -7.04001424219509
+    ]
+   },
+   "properties": {
+    "id": "VP079",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.67109147946582,
+     -7.027886985859476
+    ]
+   },
+   "properties": {
+    "id": "VP080",
+    "pred_stratum": 2,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.51837788116549,
+     -6.937606299805465
+    ]
+   },
+   "properties": {
+    "id": "VP081",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.71555808602973,
+     -6.882809067474174
+    ]
+   },
+   "properties": {
+    "id": "VP082",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.68995610043233,
+     -6.920089151765134
+    ]
+   },
+   "properties": {
+    "id": "VP083",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.70073588384176,
+     -6.975784699380544
+    ]
+   },
+   "properties": {
+    "id": "VP084",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.74340585983744,
+     -7.044056660973627
+    ]
+   },
+   "properties": {
+    "id": "VP085",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.68007463230701,
+     -6.831605096279361
+    ]
+   },
+   "properties": {
+    "id": "VP086",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.66525243011904,
+     -6.896732954378026
+    ]
+   },
+   "properties": {
+    "id": "VP087",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.74430417512156,
+     -6.878317491053576
+    ]
+   },
+   "properties": {
+    "id": "VP088",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.57048016764443,
+     -6.912902629492177
+    ]
+   },
+   "properties": {
+    "id": "VP089",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.64459117858429,
+     -7.157693544414747
+    ]
+   },
+   "properties": {
+    "id": "VP090",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.73981259870096,
+     -7.0108189954612055
+    ]
+   },
+   "properties": {
+    "id": "VP091",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.71465977074561,
+     -6.912453471850117
+    ]
+   },
+   "properties": {
+    "id": "VP092",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.53095429514318,
+     -7.040463399837149
+    ]
+   },
+   "properties": {
+    "id": "VP093",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.16264502865417,
+     -6.957818393698154
+    ]
+   },
+   "properties": {
+    "id": "VP094",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.5808107934118,
+     -7.184643002938333
+    ]
+   },
+   "properties": {
+    "id": "VP095",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.62078582355512,
+     -6.811393002386671
+    ]
+   },
+   "properties": {
+    "id": "VP096",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.58575152747446,
+     -6.9353605115951655
+    ]
+   },
+   "properties": {
+    "id": "VP097",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.71780387424003,
+     -6.828910150427002
+    ]
+   },
+   "properties": {
+    "id": "VP098",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.57587005934914,
+     -6.887749801536831
+    ]
+   },
+   "properties": {
+    "id": "VP099",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.5394882903423,
+     -7.085379164043125
+    ]
+   },
+   "properties": {
+    "id": "VP100",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.64459117858429,
+     -6.83205425392142
+    ]
+   },
+   "properties": {
+    "id": "VP101",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.60551446372509,
+     -7.131642401175281
+    ]
+   },
+   "properties": {
+    "id": "VP102",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.7371176528486,
+     -6.900326215514504
+    ]
+   },
+   "properties": {
+    "id": "VP103",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.65177770085725,
+     -7.05753139023542
+    ]
+   },
+   "properties": {
+    "id": "VP104",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.69849009563146,
+     -7.024742882365057
+    ]
+   },
+   "properties": {
+    "id": "VP105",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.55475965017234,
+     -7.0678620160027945
+    ]
+   },
+   "properties": {
+    "id": "VP106",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.18285712254686,
+     -6.939852088015763
+    ]
+   },
+   "properties": {
+    "id": "VP107",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.6356080257431,
+     -6.850020559603811
+    ]
+   },
+   "properties": {
+    "id": "VP108",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.52960682221699,
+     -7.19003289464305
+    ]
+   },
+   "properties": {
+    "id": "VP109",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.65043022793107,
+     -6.9721914382440655
+    ]
+   },
+   "properties": {
+    "id": "VP110",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.68771031222202,
+     -7.146913761005313
+    ]
+   },
+   "properties": {
+    "id": "VP111",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.65132854321519,
+     -6.996895108557353
+    ]
+   },
+   "properties": {
+    "id": "VP112",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.73127860350182,
+     -6.927275674038089
+    ]
+   },
+   "properties": {
+    "id": "VP113",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.65806590784608,
+     -6.950182713783137
+    ]
+   },
+   "properties": {
+    "id": "VP114",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.20351837408161,
+     -6.9070635801454
+    ]
+   },
+   "properties": {
+    "id": "VP115",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.73891428341685,
+     -6.947038610288719
+    ]
+   },
+   "properties": {
+    "id": "VP116",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.62123498119718,
+     -6.835198357415838
+    ]
+   },
+   "properties": {
+    "id": "VP117",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.54532733968908,
+     -7.141973026942655
+    ]
+   },
+   "properties": {
+    "id": "VP118",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.56598859122383,
+     -7.123108405976145
+    ]
+   },
+   "properties": {
+    "id": "VP119",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     110.50625062482989,
+     -7.132091558817341
+    ]
+   },
+   "properties": {
+    "id": "VP120",
+    "pred_stratum": 3,
+    "observed_fase": "",
+    "transplant_date": "",
+    "notes": ""
+   }
+  }
+ ]
+}
