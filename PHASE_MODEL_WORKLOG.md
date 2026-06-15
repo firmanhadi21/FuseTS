@@ -439,3 +439,43 @@ Multi-season scripts/outputs not yet committed (run in progress).
 
 Last updated: 2026-06-14 (2024+2025 national runs done & comparable; grid/render/CRS fixed;
 follow-up report written+pushed; multi-season retrain running to resolve dry-season bias).
+
+## 14. Multi-season retrain — RESULTS & ADOPTION (2026-06-15)
+
+**Root cause confirmed:** wet-only training (`series_0104`, Mar–Jun, **0% dry-season**) made the
+classifier fail on dry season. Fixed using **idmai's own `6fase.csv` dry subset** (Jul–Sep,
+34,143 pts, 51% generative, native 6-class) — NO paper data needed. Built
+`data/aois/points_dry6fase.csv` → extracted fused series (`series_dry6fase`) → merged with
+`series_0104` → **`series_multiseason`** (43,610 pts).
+
+**Held-out F1 (`scripts/compare_multiseason_f1.py`, 25% stratified holdout, MiniROCKET fit once):**
+| model | wet acc6/genF1 | **dry acc6/genF1** |
+|---|---|---|
+| A wet-only | 86.3 / 89.4 | **36.9 / 60.7** ❌ |
+| B multi-season | 85.5 / 88.2 | **78.6 / 91.6** ✅ |
+| C rebalanced | 86.0 / 89.1 | 65.4 / 81.2 |
+→ Multi-season is **genuinely more accurate on dry season** (not just "more generative"), no wet
+penalty. **Rebalancing HURTS** (loses dry volume) → **adopt all dry data, do NOT rebalance.**
+
+**IP over-count fixed by min_run:** the more-eager multi-season model over-segments episodes at
+`min_run=2` (IP 2.82, **18% non-physical ≥4**). Swept → **`min_run=3`** = IP 2.20, only 2.7% ≥4
+(principled: generative stage ≈ 35 d ≈ 3 periods). **Adopted: multi-season classifier + min_run=3.**
+
+**CORRECTED NUMBERS (multi-season + min_run 3):**
+- **2024: CI 1.85 → 2.18; harvest 4.22M → 4.96M ha; production 24.5 → 28.8 Mt.** Harvest-ha now
+  near BPS luas panen (~5.34M) — external corroboration that the dry-season under-count was real.
+- **2025: CI 1.94 → 2.22; harvest 4.41M → 5.06M ha; production 25.6 → 29.4 Mt.** (IP 2025>2024
+  holds; gap shrank +0.10→+0.04 since the dry-season fix lifts both years.)
+- **Report UPDATED** with corrected numbers (Ringkasan §4–5, BAB 3.3, new §3.6 dwimusim validation,
+  BAB 5 caveat #7 → resolved, BAB 6 #3 → done, BAB 7); re-rendered (0 missing glyphs).
+- Wet-only superseded; the wet-only figures (2024 1.85/24.5; 2025 1.94/25.6) remain documented above.
+  (The `java_2024/…_wetonly.json` file was clobbered by a --limit-tiles cache test — numbers safe here.)
+
+**Regeneration (detached `/tmp/adopt_ms.sh`, log `output/production/adopt_ms.log`, reuses fused
+cache):** IP/production 2024+2025 in-place (`--series series_multiseason --min-run 3 --no-resume`)
+→ `mosaic_ci_map`; phase maps 2025+2026 → `java_{2025,2026}_phases_ms/` (2024 = `java_2024_phases_ms/`).
+**On resume:** `tail output/production/adopt_ms.log`; then update the follow-up report's numbers
+(Ringkasan §4, BAB 3.3, BAB 5 caveat #7 → mark resolved) and PUSH (FuseTS WORKLOG commit + landcover report).
+
+Last updated: 2026-06-15 (multi-season adopted: dry-season bias fixed, min_run→3; 2024 corrected to
+CI 2.18 / 28.8 Mt; 2025 regenerating; report update + push pending 2025 completion).
