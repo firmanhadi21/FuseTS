@@ -69,8 +69,13 @@ fusion on the Kegiatan roadmap early, and add production estimation. Documented 
 report (BAB 4 = per-report impact).
 
 ## 8. Open items
-1. **Combined-time-series CI** (chosen but NOT built) — fuse 61 periods 2024+2025 as one, count
-   seasons/2; needs a multi-year tweak to `produce_annual_tiled`.
+1. **Combined-time-series CI — DONE** (`scripts/build_combined_ci.py` →
+   `output/production/java_combined_2024_2025/`): stitches each pixel's cached 2024+2025 fused
+   curves into one 61-period series, re-classifies (window spans the year boundary), counts
+   generative episodes over 24 months ÷2. **Mean annual IP 2.215, production 29.5 Mt/yr** (vs
+   per-year 2.18/2.22; simple average 2.20 — the +small uplift = boundary-spanning seasons counted
+   once). A true joint MOGPR re-fuse (O(n³), ~2 days) was deemed not worth it; the stitch reuses
+   cache (minutes) and delivers the boundary benefit.
 2. **Semarang field survey** → build observed-vs-predicted scorer.
 3. **Multi-DI field validation (TA 2027)** to confirm the multi-season model on a spatial split.
 4. **Ingest p14/p15** via `INGEST_NEW_PERIOD.md`.
