@@ -25,6 +25,7 @@ def make():
     x=tf.keras.layers.Dropout(0.3)(x); out=tf.keras.layers.Dense(6,activation="softmax")(x)
     mdl=tf.keras.Model(inp,out); mdl.compile("adam","sparse_categorical_crossentropy"); return mdl
 regs=sorted(set(region)); O=[]; P=[]; per=[]; g=lambda a:np.isin(a,[4,5]).astype(int)
+predf=np.zeros(len(fase),int)   # full-length, indexed by original position (for McNemar alignment)
 for r in regs:
     te=region==r; tr=~te
     mu=X[tr].mean((0,1),keepdims=True); sd=X[tr].std((0,1),keepdims=True)+1e-6
@@ -33,7 +34,9 @@ for r in regs:
     tf.keras.utils.set_random_seed(0); mdl=make()
     mdl.fit(Xtr,y[tr],epochs=30,batch_size=64,verbose=0,class_weight=cw)
     pr=mdl.predict(Xte,verbose=0).argmax(1)+1; o=fase[te]
+    predf[te]=pr
     O+=o.tolist(); P+=pr.tolist(); per.append(100*f1_score(g(o),g(pr),zero_division=0))
+np.savez("output/phase_model/loro_preds_cnn.npz",pred=predf,fase=fase,region=region)
 O=np.array(O); P=np.array(P); O3=np.vectorize(S3.get)(O); P3=np.vectorize(S3.get)(P)
 print(f"=== 1D-CNN LORO ({pre}) n={len(fase)} ===")
 print(f"  6-class acc {accuracy_score(O,P)*100:.1f}%   3-class acc {accuracy_score(O3,P3)*100:.1f}%")
