@@ -105,10 +105,18 @@ def _process_cell(item, vh_stack, year, res):
         # VH resampled onto the same grid (interp over finite VH)
         vh_grid = np.interp(out_grid, t_ord[m], vh_v[m]).astype("float32") if m.sum() >= 2 \
             else np.full(out_grid.shape, np.nan, "float32")
+        # --- ABLATION additions (backward-compatible) ---
+        # naive linear-interpolated NDVI (optical-only, NO SAR) onto the same grid: the cheap
+        # gap-fill baseline to contrast against MOGPR fusion. `nv`/`nd_v`/`t_ord` are the finite
+        # S2 NDVI observations used above as MOGPR input, so this uses IDENTICAL optical data.
+        ndvi_naive = np.interp(out_grid, t_ord[nv], nd_v[nv]).astype("float32")
+        # S2 valid-observation fraction (for cloud-stratified analysis of the fusion benefit)
+        ndvi_valid_frac = float(nv.sum()) / float(len(nd_v))
         rows.append((fused, vh_grid, out_grid.astype("float32"),
                      float(pd.Timestamp(p.tanggal).toordinal()),
                      int(p.fase), p.region, p.lokasi, p.get("sumber", ""),
-                     float(p.bujur), float(p.lintang)))
+                     float(p.bujur), float(p.lintang),
+                     ndvi_naive, ndvi_valid_frac))
     log(f"cell {utm},{_cx:.2f},{_cy:.2f}: {len(rows)}/{len(df)} series")
     return rows
 
@@ -140,13 +148,16 @@ def main(argv=None):
 
     # all share the same grid length; align to the modal length just in case
     L = int(np.median([len(r[0]) for r in allrows]))
-    keep = [r for r in allrows if len(r[0]) == L and len(r[1]) == L]
+    keep = [r for r in allrows if len(r[0]) == L and len(r[1]) == L and len(r[10]) == L]
     ndvi = np.stack([r[0] for r in keep]); vh = np.stack([r[1] for r in keep])
+    ndvi_naive = np.stack([r[10] for r in keep])          # ablation baseline (naive optical fill)
     t_grid = keep[0][2]; label_ord = np.array([r[3] for r in keep], float)
-    meta = pd.DataFrame([(r[4], r[5], r[6], r[7], r[8], r[9]) for r in keep],
-                        columns=["fase", "region", "lokasi", "sumber", "bujur", "lintang"])
+    meta = pd.DataFrame([(r[4], r[5], r[6], r[7], r[8], r[9], r[11]) for r in keep],
+                        columns=["fase", "region", "lokasi", "sumber", "bujur", "lintang",
+                                 "ndvi_valid_frac"])
     out = Path(a.out); out.parent.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(str(out) + ".npz", ndvi=ndvi, vh=vh, t_grid=t_grid, label_ord=label_ord)
+    np.savez_compressed(str(out) + ".npz", ndvi=ndvi, vh=vh, ndvi_naive=ndvi_naive,
+                        t_grid=t_grid, label_ord=label_ord)
     meta.to_csv(str(out) + "_meta.csv", index=False)
     log(f"wrote {out}.npz ({len(meta)} series, L={L}) + meta | fase {meta['fase'].value_counts().sort_index().to_dict()}")
     return out
